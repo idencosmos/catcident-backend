@@ -1,3 +1,25 @@
+### Django ###
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media
+
+### Docker ###
+.env.*
+docker-compose.yml
+
+
+### Mac ###
+.DS_Store
+
+# ------------------------------------------------------------------------------
+# 아래는 Github에서 생성한 .gitignore(파이썬) 파일입니다.
+# ------------------------------------------------------------------------------
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -169,3 +191,4 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+

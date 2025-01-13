@@ -1,0 +1,35 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        DJANGO_SETTINGS_MODULE: config.settings.production  # Default to production settings.
+    env_file:
+      - .env
+      - .env.prod
+    volumes:
+      - ./media:/app/media  # 사용자 업로드 파일 저장소.
+      - ./staticfiles:/app/staticfiles  # 정적 파일 저장소.
+    depends_on:
+      - db
+    networks:
+      - internal
+
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - db_data:/var/lib/postgresql/data/
+    networks:
+      - internal
+
+volumes:
+  db_data:
+
+networks:
+  internal:
+    driver: bridge

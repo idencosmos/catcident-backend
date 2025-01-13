@@ -1,0 +1,38 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python manage.py runserver 0.0.0.0:8000  # Django 개발 서버 실행
+    env_file:
+      - .env        # 공통 환경 변수 파일
+      - .env.dev    # 개발 환경 변수 파일
+    environment:
+      DJANGO_SETTINGS_MODULE: config.settings.development  # 개발용 settings 모듈 사용
+    volumes:
+      - ./:/app  # 소스 코드 변경 사항 실시간 반영 (Live Reload)
+    depends_on:
+      - db
+    networks:
+      - internal
+      - caddy
+
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - db_data:/var/lib/postgresql/data/
+    networks:
+      - internal
+
+volumes:
+  db_data:
+
+networks:
+  internal:
+    driver: bridge
+  caddy:
+    external: true
