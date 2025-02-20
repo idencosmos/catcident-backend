@@ -1,5 +1,5 @@
+# homepage/serializers/global_serializers.py
 from rest_framework import serializers
-from parler_rest.serializers import TranslatableModelSerializer, TranslatedFieldsField
 
 from homepage.models.global_models import (
     SiteTitle,
@@ -11,74 +11,77 @@ from homepage.models.global_models import (
     Copyright,
 )
 
-class NavigationSubMenuSerializer(TranslatableModelSerializer):
-    translations = TranslatedFieldsField(shared_model=NavigationSubMenu)
+
+class SiteTitleSerializer(serializers.ModelSerializer):
+    title = serializers.SerializerMethodField()
+
+    class Meta:
+        model = SiteTitle
+        fields = ["id", "title"]
+
+    def get_title(self, obj):
+        # LocaleMiddleware가 설정한 현재 언어의 title
+        return obj.safe_translation_getter("title", any_language=True)
+
+
+class NavigationSubMenuSerializer(serializers.ModelSerializer):
+    label = serializers.SerializerMethodField()
 
     class Meta:
         model = NavigationSubMenu
-        fields = [
-            "id", "href", "translations"
-        ]
+        fields = ["id", "href", "label"]
+
+    def get_label(self, obj):
+        return obj.safe_translation_getter("label", any_language=True)
 
 
-class NavigationGroupSerializer(TranslatableModelSerializer):
-    translations = TranslatedFieldsField(shared_model=NavigationGroup)
+class NavigationGroupSerializer(serializers.ModelSerializer):
+    group_label = serializers.SerializerMethodField()
     sub_menus = NavigationSubMenuSerializer(many=True, read_only=True)
 
     class Meta:
         model = NavigationGroup
-        fields = [
-            "id", "translations",  # group_label
-            "highlighted",
-            "sub_menus",
-        ]
+        fields = ["id", "group_label", "highlighted", "sub_menus"]
+
+    def get_group_label(self, obj):
+        return obj.safe_translation_getter("group_label", any_language=True)
 
 
-class FooterSubMenuSerializer(TranslatableModelSerializer):
-    translations = TranslatedFieldsField(shared_model=FooterSubMenu)
+class FooterSubMenuSerializer(serializers.ModelSerializer):
+    label = serializers.SerializerMethodField()
 
     class Meta:
         model = FooterSubMenu
-        fields = [
-            "id", "href", "translations"
-        ]
+        fields = ["id", "href", "label"]
+
+    def get_label(self, obj):
+        return obj.safe_translation_getter("label", any_language=True)
 
 
-class FooterSectionSerializer(TranslatableModelSerializer):
-    translations = TranslatedFieldsField(shared_model=FooterSection)
+class FooterSectionSerializer(serializers.ModelSerializer):
+    label = serializers.SerializerMethodField()
     sub_menus = FooterSubMenuSerializer(many=True, read_only=True)
 
     class Meta:
         model = FooterSection
-        fields = [
-            "id", "translations",
-            "sub_menus",
-        ]
+        fields = ["id", "label", "sub_menus"]
+
+    def get_label(self, obj):
+        return obj.safe_translation_getter("label", any_language=True)
 
 
-class SiteTitleSerializer(TranslatableModelSerializer):
-    translations = TranslatedFieldsField(shared_model=SiteTitle)
-
-    class Meta:
-        model = SiteTitle
-        fields = [
-            "id", "translations"
-        ]
-
-
-class FamilySiteSerializer(TranslatableModelSerializer):
-    translations = TranslatedFieldsField(shared_model=FamilySite)
+class FamilySiteSerializer(serializers.ModelSerializer):
+    label = serializers.SerializerMethodField()
 
     class Meta:
         model = FamilySite
-        fields = [
-            "id", "href", "translations"
-        ]
+        fields = ["id", "href", "label"]
+
+    def get_label(self, obj):
+        return obj.safe_translation_getter("label", any_language=True)
 
 
 class CopyrightSerializer(serializers.ModelSerializer):
     class Meta:
         model = Copyright
-        fields = [
-            "id", "text"
-        ]
+        fields = ["id", "text"]
