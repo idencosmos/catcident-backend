@@ -1,0 +1,88 @@
+/* [라이트 모드] ck-content 기본 폰트/배경 */
+.ck-content {
+  background: #ffffff;
+  color: #000000;
+  line-height: 1.6;
+  /* padding, margin 등 필요 시 설정 */
+}
+
+/* Heading 공통 스타일 (라이트 모드) */
+.ck-content h1 {
+  font-size: 2em;
+  font-weight: bold;
+  color: #222222;  /* 조금 짙은 회색 */
+  margin-top: 1.2em;
+  margin-bottom: 0.6em;
+}
+.ck-content h2 {
+  font-size: 1.6em;
+  font-weight: bold;
+  color: #333333;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}
+.ck-content h3 {
+  font-size: 1.3em;
+  font-weight: bold;
+  color: #444444;
+  margin-top: 0.8em;
+  margin-bottom: 0.4em;
+}
+
+/* 문단, 목록 등도 살짝 스타일 잡으면 가독성 좋아짐 */
+.ck-content p,
+.ck-content ul,
+.ck-content ol {
+  margin-bottom: 1em;
+}
+
+/* 이미지 캡션 */
+.ck-content .image figcaption {
+  font-size: 0.9em;
+  color: #666666;
+  text-align: center;
+  margin-top: 0.5em;
+}
+
+
+/* [다크 모드] */
+body.dark-theme .ck-content {
+  background: #2e2e2e;
+  color: #ffffff;   /* 글씨를 밝게 */
+}
+
+body.dark-theme .ck-content h1 {
+  color: #ffffff;
+}
+body.dark-theme .ck-content h2 {
+  color: #efefef;
+}
+body.dark-theme .ck-content h3 {
+  color: #dddddd;
+}
+
+body.dark-theme .ck-content .image figcaption {
+  color: #cccccc;
+}
+
+/* 추가 권장 스타일 */
+.ck-content a {
+  color: #007bff;  /* 라이트 모드: 파란색 링크 */
+  text-decoration: underline;
+}
+body.dark-theme .ck-content a {
+  color: #8ab4f8;  /* 다크 모드: 좀 더 밝은 톤의 파랑 */
+}
+
+.ck-content ul,
+.ck-content ol {
+  padding-left: 1.5em;
+}
+
+body.dark-theme .ck-content table {
+  border-color: #555555;
+}
+body.dark-theme .ck-content table td,
+body.dark-theme .ck-content table th {
+  border-color: #666666;
+}
