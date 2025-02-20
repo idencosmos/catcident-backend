@@ -2,24 +2,27 @@ from .base import *
 
 DEBUG = True
 
-SECURE_SSL_REDIRECT = False
-SECURE_HSTS_SECONDS = 0
-SECURE_HSTS_INCLUDE_SUBDOMAINS = False
-SECURE_HSTS_PRELOAD = False
+ALLOWED_HOSTS = ["api.catcident.local", "catcident-backend-api-1"]
+CSRF_TRUSTED_ORIGINS = ["https://api.catcident.local"]
+CORS_ALLOWED_ORIGINS = ["https://catcident.local", "http://catcident-frontend-web-1:3000"]
 
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
-
-SECURE_CONTENT_TYPE_NOSNIFF = True
-SECURE_BROWSER_XSS_FILTER = False
-
-# 개발 환경만의 추가 설정
+# Debug Toolbar
 INSTALLED_APPS += [
     "debug_toolbar",
 ]
-
 MIDDLEWARE += [
     "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 INTERNAL_IPS = ["127.0.0.1"]
+
+# SSL Proxy (Caddy) 설정
+SECURE_SSL_REDIRECT = False
+SECURE_HSTS_SECONDS = 0
+SECURE_HSTS_INCLUDE_SUBDOMAINS = False
+SECURE_HSTS_PRELOAD = False
+
+CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = False
+SECURE_CONTENT_TYPE_NOSNIFF = False
+SECURE_BROWSER_XSS_FILTER = False
