@@ -1,17 +1,19 @@
 # homepage/models/about_models.py
-
 from django.db import models
 from django.utils import timezone
 from django_ckeditor_5.fields import CKEditor5Field
 from parler.models import TranslatableModel, TranslatedFields
-
+from uploads.models import Media
 
 class Creator(TranslatableModel):
-    """
-    예) 작가/아티스트 정보
-    """
     slug = models.SlugField(unique=True)
-    photo = models.ImageField(upload_to='creators/', blank=True, null=True)
+    photo = models.ForeignKey(
+        Media, 
+        on_delete=models.SET_NULL, 
+        blank=True, 
+        null=True, 
+        related_name="homepage_creator_photos"
+    )
 
     translations = TranslatedFields(
         name=models.CharField(max_length=100),
@@ -29,8 +31,7 @@ class Creator(TranslatableModel):
 
     class Meta:
         verbose_name = "A01. Creator"
-        verbose_name_plural = "A01. Creator"
-
+        verbose_name_plural = "A01. Creators"
 
 class BookCategory(TranslatableModel):
     translations = TranslatedFields(
@@ -45,9 +46,14 @@ class BookCategory(TranslatableModel):
         verbose_name = "A02. Book Category"
         verbose_name_plural = "A02. Book Categories"
 
-
 class Book(TranslatableModel):
-    cover_image = models.ImageField(upload_to='books/', blank=True, null=True)
+    cover_image = models.ForeignKey(
+        Media, 
+        on_delete=models.SET_NULL, 
+        blank=True, 
+        null=True, 
+        related_name="homepage_book_covers"
+    )
     pub_date = models.DateField(blank=True, null=True)
     category = models.ForeignKey(
         BookCategory,
@@ -80,10 +86,15 @@ class Book(TranslatableModel):
         verbose_name = "A03. Book"
         verbose_name_plural = "A03. Books"
 
-
 class Character(TranslatableModel):
     slug = models.SlugField(unique=True)
-    image = models.ImageField(upload_to='characters/', blank=True, null=True)
+    image = models.ForeignKey(
+        Media, 
+        on_delete=models.SET_NULL, 
+        blank=True, 
+        null=True, 
+        related_name="homepage_character_images"
+    )
     books = models.ManyToManyField(Book, blank=True, related_name="characters")
     creator = models.ForeignKey(
         Creator,
@@ -110,10 +121,15 @@ class Character(TranslatableModel):
         verbose_name = "A04. Character"
         verbose_name_plural = "A04. Characters"
 
-
 class HistoryEvent(TranslatableModel):
     date = models.DateField()
-    image = models.ImageField(upload_to='history/', blank=True, null=True)
+    image = models.ForeignKey(
+        Media, 
+        on_delete=models.SET_NULL, 
+        blank=True, 
+        null=True, 
+        related_name="homepage_history_images"
+    )
 
     translations = TranslatedFields(
         title=models.CharField(max_length=200),
@@ -132,7 +148,6 @@ class HistoryEvent(TranslatableModel):
 
     def __str__(self):
         return self.safe_translation_getter("title", any_language=True) or f"Event {self.pk}"
-
 
 class LicensePage(TranslatableModel):
     updated_at = models.DateTimeField(default=timezone.now)

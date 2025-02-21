@@ -22,6 +22,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path('api/uploads/', include('uploads.urls')),  # uploads app의 API
     path("api/homepage/", include("homepage.urls")),  # homepage app의 API
     path(
         "ckeditor5/", include("django_ckeditor_5.urls")

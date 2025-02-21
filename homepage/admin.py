@@ -3,6 +3,7 @@
 from django.contrib import admin
 from parler.admin import TranslatableAdmin
 from .models import (
+    # 기존 Global 모델
     SiteTitle,
     NavigationGroup,
     NavigationSubMenu,
@@ -10,8 +11,23 @@ from .models import (
     FooterSubMenu,
     FamilySite,
     Copyright,
+    # 기존 About 모델
+    Creator,
+    BookCategory,
+    Book,
+    Character,
+    HistoryEvent,
+    LicensePage,
+    # 새로운 Resources 모델
+    ResourceCategory,
+    Resource,
+    # 새로운 News 모델
+    NewsCategory,
+    News,
+    # 새로운 Events 모델
+    EventCategory,
+    Event,
 )
-from .models import Creator, BookCategory, Book, Character, HistoryEvent, LicensePage
 
 
 @admin.register(SiteTitle)
@@ -117,6 +133,57 @@ class HistoryEventAdmin(TranslatableAdmin):
 @admin.register(LicensePage)
 class LicensePageAdmin(TranslatableAdmin):
     list_display = ("id", "title_display", "updated_at")
+
+    def title_display(self, obj):
+        return obj.safe_translation_getter("title", any_language=True)
+
+# =================== Resources Admin ===================
+
+@admin.register(ResourceCategory)
+class ResourceCategoryAdmin(TranslatableAdmin):
+    list_display = ("id", "slug", "name_display")
+
+    def name_display(self, obj):
+        return obj.safe_translation_getter("name", any_language=True)
+
+
+@admin.register(Resource)
+class ResourceAdmin(TranslatableAdmin):
+    list_display = ("id", "title_display", "category", "created_at")
+
+    def title_display(self, obj):
+        return obj.safe_translation_getter("title", any_language=True)
+
+# =================== News Admin ===================
+
+@admin.register(NewsCategory)
+class NewsCategoryAdmin(TranslatableAdmin):
+    list_display = ("id", "slug", "name_display")
+
+    def name_display(self, obj):
+        return obj.safe_translation_getter("name", any_language=True)
+
+
+@admin.register(News)
+class NewsAdmin(TranslatableAdmin):
+    list_display = ("id", "title_display", "category", "date", "created_at")
+
+    def title_display(self, obj):
+        return obj.safe_translation_getter("title", any_language=True)
+
+# =================== Events Admin ===================
+
+@admin.register(EventCategory)
+class EventCategoryAdmin(TranslatableAdmin):
+    list_display = ("id", "slug", "name_display")
+
+    def name_display(self, obj):
+        return obj.safe_translation_getter("name", any_language=True)
+
+
+@admin.register(Event)
+class EventAdmin(TranslatableAdmin):
+    list_display = ("id", "title_display", "category", "date", "created_at")
 
     def title_display(self, obj):
         return obj.safe_translation_getter("title", any_language=True)

@@ -33,12 +33,13 @@ INSTALLED_APPS = [
     # 공통 앱
     "accounts",
     "homepage",
+    "uploads",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    'django.middleware.locale.LocaleMiddleware',
+    "django.middleware.locale.LocaleMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -130,21 +131,31 @@ LANGUAGES = (
     # 필요하면 추가 언어
 )
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
-
-STATIC_URL = "/static/"
-STATIC_ROOT = BASE_DIR / "staticfiles"
-
-MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"
-
-# settings/base.py
+# R2 설정
 R2_BUCKET_NAME = env("R2_BUCKET_NAME")
 R2_REGION = env("R2_REGION", default="auto")
 R2_ENDPOINT_URL = env("R2_ENDPOINT_URL")
 R2_ACCESS_KEY_ID = env("R2_ACCESS_KEY_ID")
 R2_SECRET_ACCESS_KEY = env("R2_SECRET_ACCESS_KEY")
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/5.1/howto/static-files/
+
+# Static files
+STATIC_URL = env("STATIC_URL", default="/static/")
+STATIC_ROOT = "staticfiles"
+
+# Media files
+MEDIA_URL = env("MEDIA_URL", default="/media/")
+DEFAULT_FILE_STORAGE = env("DEFAULT_FILE_STORAGE")
+MEDIA_ROOT = "media"
+
+
+STORAGES = {
+    "staticfiles": {"BACKEND": env("STATICFILES_STORAGE")},
+    "default": {"BACKEND": env("DEFAULT_FILE_STORAGE")},
+}
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -183,28 +194,60 @@ CKEDITOR_5_FILE_UPLOAD_PERMISSION = "staff"
 
 # (Optional) 허용할 파일 타입
 CKEDITOR_5_ALLOW_ALL_FILE_TYPES = True
-CKEDITOR_5_UPLOAD_FILE_TYPES = ["jpeg", "png", "pdf"]
+CKEDITOR_5_UPLOAD_FILE_TYPES = ["jpeg", "jpg", "gif", "png", "pdf"]
 CKEDITOR_5_MAX_FILE_SIZE = 10  # MB
 
 CKEDITOR_5_CONFIGS = {
     "default": {
+        "blockToolbar": [
+            "paragraph",
+            "heading1",
+            "heading2",
+            "heading3",
+            "|",
+            "bulletedList",
+            "numberedList",
+            "|",
+            "blockQuote",
+        ],
         "toolbar": {
             "items": [
                 "heading",
                 "|",
+                "outdent",
+                "indent",
+                "alignment",
+                "|",
                 "bold",
                 "italic",
                 "link",
+                "underline",
+                "strikethrough",
+                "code",
+                "subscript",
+                "superscript",
+                "highlight",
+                "|",
                 "bulletedList",
                 "numberedList",
+                "todoList",
+                "|",
+                "fontSize",
+                "fontFamily",
+                "fontColor",
+                "fontBackgroundColor",
+                "removeFormat",
+                "|",
+                "codeBlock",
                 "blockQuote",
-                "imageUpload",
-                "fileUpload",
+                "insertImage",
+                "mediaEmbed",
+                "insertTable",
+                "|",
+                "sourceEditing",
             ],
             "shouldNotGroupWhenFull": True,
         },
-        "language": "en",
-        # 테이블/이미지 등 추가 구성
         "image": {
             "toolbar": [
                 "imageTextAlternative",
@@ -215,7 +258,13 @@ CKEDITOR_5_CONFIGS = {
                 "imageStyle:side",
                 "|",
             ],
-            "styles": ["full", "side", "alignLeft", "alignRight", "alignCenter"],
+            "styles": [
+                "full",
+                "side",
+                "alignLeft",
+                "alignRight",
+                "alignCenter",
+            ],
         },
         "table": {
             "contentToolbar": [
@@ -234,38 +283,39 @@ CKEDITOR_5_CONFIGS = {
                 "backgroundColors": customColorPalette,
             },
         },
-    },
-    "dark_theme": {
-        # 다크모드용 Config 예시
-        "toolbar": {
-            "items": [
-                "heading",
-                "|",
-                "bold",
-                "italic",
-                "link",
-                "underline",
-                "bulletedList",
-                "numberedList",
-                "blockQuote",
-                "imageUpload",
-                "fileUpload",
-            ],
-            "shouldNotGroupWhenFull": True,
+        "heading": {
+            "options": [
+                {
+                    "model": "paragraph",
+                    "title": "Paragraph",
+                    "class": "ck-heading_paragraph",
+                },
+                {
+                    "model": "heading1",
+                    "view": "h2",
+                    "title": "Heading 1",
+                    "class": "ck-heading_heading1",
+                },
+                {
+                    "model": "heading2",
+                    "view": "h3",
+                    "title": "Heading 2",
+                    "class": "ck-heading_heading2",
+                },
+                {
+                    "model": "heading3",
+                    "view": "h4",
+                    "title": "Heading 3",
+                    "class": "ck-heading_heading3",
+                },
+            ]
         },
-        "language": "en",
-        # 다크모드 시, content 영역에 다른 CSS를 적용하거나,
-        # CKEDITOR_5_CUSTOM_CSS에서 다크 테마용 스타일을 함께 처리
-        "image": {
-            "toolbar": [
-                "imageTextAlternative",
-                "|",
-                "imageStyle:alignLeft",
-                "imageStyle:alignRight",
-                "imageStyle:alignCenter",
-                "imageStyle:side",
-                "|",
-            ],
+    },
+    "list": {
+        "properties": {
+            "styles": "true",
+            "startIndex": "true",
+            "reversed": "true",
         },
     },
 }

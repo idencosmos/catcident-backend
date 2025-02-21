@@ -1,21 +1,15 @@
 # homepage/serializers/about_serializers.py
-
 from rest_framework import serializers
 from homepage.models.about_models import (
-    Creator,
-    BookCategory,
-    Book,
-    Character,
-    HistoryEvent,
-    LicensePage,
+    Creator, BookCategory, Book, Character, HistoryEvent, LicensePage
 )
-
+from uploads.serializers import MediaSerializer
 
 class CreatorSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField()
     bio_summary = serializers.SerializerMethodField()
     description = serializers.SerializerMethodField()
-    # slug, photo는 원본 필드 그대로
+    photo = MediaSerializer(read_only=True)
 
     class Meta:
         model = Creator
@@ -30,7 +24,6 @@ class CreatorSerializer(serializers.ModelSerializer):
     def get_description(self, obj):
         return obj.safe_translation_getter("description", any_language=True)
 
-
 class BookCategorySerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField()
 
@@ -41,27 +34,19 @@ class BookCategorySerializer(serializers.ModelSerializer):
     def get_name(self, obj):
         return obj.safe_translation_getter("name", any_language=True)
 
-
 class BookSerializer(serializers.ModelSerializer):
     title = serializers.SerializerMethodField()
     subtitle = serializers.SerializerMethodField()
     description = serializers.SerializerMethodField()
     category = BookCategorySerializer(read_only=True)
-    # authors: CreatorSerializer 중첩
-
     authors = CreatorSerializer(many=True, read_only=True)
+    cover_image = MediaSerializer(read_only=True)
 
     class Meta:
         model = Book
         fields = [
-            "id",
-            "title",
-            "subtitle",
-            "description",
-            "cover_image",
-            "pub_date",
-            "category",
-            "authors",
+            "id", "title", "subtitle", "description", 
+            "cover_image", "pub_date", "category", "authors"
         ]
 
     def get_title(self, obj):
@@ -73,24 +58,16 @@ class BookSerializer(serializers.ModelSerializer):
     def get_description(self, obj):
         return obj.safe_translation_getter("description", any_language=True)
 
-
 class CharacterSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField()
     description = serializers.SerializerMethodField()
     books = BookSerializer(many=True, read_only=True)
     creator = CreatorSerializer(read_only=True)
+    image = MediaSerializer(read_only=True)
 
     class Meta:
         model = Character
-        fields = [
-            "id",
-            "slug",
-            "image",
-            "name",
-            "description",
-            "books",
-            "creator",
-        ]
+        fields = ["id", "slug", "image", "name", "description", "books", "creator"]
 
     def get_name(self, obj):
         return obj.safe_translation_getter("name", any_language=True)
@@ -98,10 +75,10 @@ class CharacterSerializer(serializers.ModelSerializer):
     def get_description(self, obj):
         return obj.safe_translation_getter("description", any_language=True)
 
-
 class HistoryEventSerializer(serializers.ModelSerializer):
     title = serializers.SerializerMethodField()
     description = serializers.SerializerMethodField()
+    image = MediaSerializer(read_only=True)
 
     class Meta:
         model = HistoryEvent
@@ -112,7 +89,6 @@ class HistoryEventSerializer(serializers.ModelSerializer):
 
     def get_description(self, obj):
         return obj.safe_translation_getter("description", any_language=True)
-
 
 class LicensePageSerializer(serializers.ModelSerializer):
     title = serializers.SerializerMethodField()

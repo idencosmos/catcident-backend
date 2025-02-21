@@ -1,17 +1,23 @@
 # homepage/urls.py
 from django.urls import path
 from homepage.views.global_views import (
-    SiteTitleDetailAPIView,
-    NavigationGroupListAPIView,
-    FooterSectionListAPIView,
-    FamilySiteListAPIView,
-    CopyrightDetailAPIView
+    SiteTitleDetailAPIView, NavigationGroupListAPIView,
+    FooterSectionListAPIView, FamilySiteListAPIView, CopyrightDetailAPIView
 )
 from homepage.views.about_views import (
     CreatorListAPIView, CreatorDetailAPIView,
     BookCategoryListAPIView, BookListAPIView, BookDetailAPIView,
     CharacterListAPIView, CharacterDetailAPIView,
     HistoryEventListAPIView, LicensePageDetailAPIView
+)
+from homepage.views.resources_views import (
+    ResourceCategoryListAPIView, ResourceListAPIView, ResourceDetailAPIView
+)
+from homepage.views.news_views import (
+    NewsCategoryListAPIView, NewsListAPIView, NewsDetailAPIView
+)
+from homepage.views.events_views import (
+    EventCategoryListAPIView, EventListAPIView, EventDetailAPIView
 )
 
 urlpatterns = [
@@ -32,4 +38,19 @@ urlpatterns = [
     path('about/characters/<slug:slug>/', CharacterDetailAPIView.as_view(), name='character-detail'),
     path('about/history/', HistoryEventListAPIView.as_view(), name='historyevent-list'),
     path('about/license/', LicensePageDetailAPIView.as_view(), name='licensepage-detail'),
+
+    # Resources
+    path('resources/categories/', ResourceCategoryListAPIView.as_view(), name='resource-category-list'),
+    path('resources/', ResourceListAPIView.as_view(), name='resource-list'),
+    path('resources/<int:id>/', ResourceDetailAPIView.as_view(), name='resource-detail'),
+
+    # News
+    path('news/categories/', NewsCategoryListAPIView.as_view(), name='news-category-list'),
+    path('news/', NewsListAPIView.as_view(), name='news-list'),
+    path('news/<int:id>/', NewsDetailAPIView.as_view(), name='news-detail'),
+
+    # Events
+    path('events/categories/', EventCategoryListAPIView.as_view(), name='event-category-list'),
+    path('events/', EventListAPIView.as_view(), name='event-list'),
+    path('events/<int:id>/', EventDetailAPIView.as_view(), name='event-detail'),
 ]
