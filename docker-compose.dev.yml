@@ -3,16 +3,17 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: python manage.py runserver 0.0.0.0:8000  # Django 개발 서버 실행
+    command: python manage.py runserver 0.0.0.0:8000 # Django 개발 서버 실행
     env_file:
-      - .env        # 공통 환경 변수 파일
-      - .env.dev    # 개발 환경 변수 파일
+      - .env # 공통 환경 변수 파일
+      - .env.dev # 개발 환경 변수 파일
     environment:
-      DJANGO_SETTINGS_MODULE: config.settings.development  # 개발용 settings 모듈 사용
+      DJANGO_SETTINGS_MODULE: config.settings.development # 개발용 settings 모듈 사용
     volumes:
-      - ./:/app  # 소스 코드 변경 사항 실시간 반영 (Live Reload)
+      - ./:/app # 소스 코드 변경 사항 실시간 반영 (Live Reload)
     depends_on:
       - db
+      - redis
     networks:
       - internal
       - caddy
@@ -28,8 +29,52 @@ services:
     networks:
       - internal
 
+  redis:
+    image: redis:alpine
+    command: redis-server --requirepass ${REDIS_PASSWORD:-redis_password}
+    volumes:
+      - redis_data:/data
+    networks:
+      - internal
+
+  celery:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: celery -A config worker -l info
+    env_file:
+      - .env
+      - .env.dev
+    environment:
+      DJANGO_SETTINGS_MODULE: config.settings.development
+    volumes:
+      - ./:/app
+    depends_on:
+      - api
+      - redis
+    networks:
+      - internal
+
+  celery-beat:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: celery -A config beat -l info
+    env_file:
+      - .env
+      - .env.dev
+    environment:
+      DJANGO_SETTINGS_MODULE: config.settings.development
+    volumes:
+      - ./:/app
+    depends_on:
+      - redis
+    networks:
+      - internal
+
 volumes:
   db_data:
+  redis_data:
 
 networks:
   internal:

@@ -17,6 +17,10 @@ django-ckeditor-5 = "^0.2.17"
 django-parler = "^2.3"
 django-storages = "^1.14.5"
 boto3 = "^1.36.24"
+celery = "^5.4.0"
+redis = "^5.2.1"
+django-celery-beat = "^2.7.0"
+django-redis = "^5.4.0"
 
 
 [build-system]

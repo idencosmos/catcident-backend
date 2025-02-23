@@ -6,18 +6,21 @@ from django.db.models.signals import pre_save, post_save, post_delete, m2m_chang
 from django.dispatch import receiver
 from django.apps import apps
 from .models import Media
+from .tasks import update_media_usage_async
 
-# 동적으로 스토리지 클래스를 가져오는 함수 정의
+
 def get_storage_class(storage_path):
     """주어진 경로에서 스토리지 클래스를 동적으로 임포트합니다."""
     module_name, class_name = storage_path.rsplit('.', 1)
     module = importlib.import_module(module_name)
     return getattr(module, class_name)
 
+
 def update_media_usage_cache(media):
-    """주어진 Media 객체의 사용 상태 업데이트"""
+    """주어진 Media 객체의 사용 상태를 비동기로 업데이트"""
     if media and isinstance(media, Media):
-        media.update_usage_cache()
+        update_media_usage_async.delay(media.id)
+
 
 @receiver(pre_save)
 def store_old_values(sender, instance, **kwargs):
@@ -31,6 +34,7 @@ def store_old_values(sender, instance, **kwargs):
             except AttributeError:
                 old_value = None
             setattr(instance, f"_old_{field.name}", old_value)
+
 
 @receiver(post_save)
 def update_media_references(sender, instance, **kwargs):
@@ -50,16 +54,15 @@ def update_media_references(sender, instance, **kwargs):
                 for media in related_manager.all():
                     update_media_usage_cache(media)
 
+
 @receiver(post_delete)
 def update_media_references_on_delete(sender, instance, **kwargs):
     """삭제 후 Media 참조 상태 갱신 및 R2 파일 삭제"""
     if sender == Media:
-        # Media 객체 자체가 삭제될 때 R2 파일도 삭제
         storage = get_storage_class(getattr(settings, "DEFAULT_FILE_STORAGE", ""))()
         if storage.exists(instance.file.name):
             storage.delete(instance.file.name)
         return
-    # 다른 모델 삭제 시 Media 참조 상태 갱신
     for field in sender._meta.get_fields():
         if isinstance(field, (models.ForeignKey, models.OneToOneField)) and field.related_model == Media:
             media = getattr(instance, field.name, None)
@@ -69,6 +72,7 @@ def update_media_references_on_delete(sender, instance, **kwargs):
             if related_manager:
                 for media in related_manager.all():
                     update_media_usage_cache(media)
+
 
 @receiver(m2m_changed)
 def handle_m2m_change(sender, instance, action, pk_set, **kwargs):
@@ -83,6 +87,7 @@ def handle_m2m_change(sender, instance, action, pk_set, **kwargs):
                         update_media_usage_cache(media)
                     except Media.DoesNotExist:
                         continue
+
 
 def ready():
     """앱 초기화 시 모든 신호 연결"""

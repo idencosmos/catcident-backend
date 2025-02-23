@@ -1,3 +1,5 @@
+# config/settings/base.py
+
 import environ
 from pathlib import Path
 
@@ -30,6 +32,7 @@ INSTALLED_APPS = [
     "django_ckeditor_5",
     "parler",
     "storages",
+    "django_celery_beat",
     # 공통 앱
     "accounts",
     "homepage",
@@ -170,6 +173,32 @@ REST_FRAMEWORK = {
     # 필요하다면 추가
 }
 
+# Celery 설정
+CELERY_BROKER_URL = env("CELERY_BROKER_URL")
+CELERY_RESULT_BACKEND = env("CELERY_RESULT_BACKEND")
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_TIMEZONE = "Asia/Seoul"
+
+# Redis 캐시 설정
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": env("REDIS_URL"),
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        },
+    }
+}
+
+CELERY_BEAT_SCHEDULE = {
+    'clean-unused-media-every-day': {
+        'task': 'uploads.tasks.clean_unused_media_task',
+        'schedule': 864000.0,  # 240시간마다
+    },
+}
+
 # CKEditor 5 Settings
 customColorPalette = [
     {"color": "hsl(4, 90%, 58%)", "label": "Red"},
@@ -240,8 +269,9 @@ CKEDITOR_5_CONFIGS = {
                 "|",
                 "codeBlock",
                 "blockQuote",
-                "insertImage",
                 "mediaEmbed",
+                "insertImage",
+                "fileUpload",
                 "insertTable",
                 "|",
                 "sourceEditing",
