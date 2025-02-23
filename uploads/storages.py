@@ -6,6 +6,7 @@ from storages.backends.s3boto3 import S3Boto3Storage
 
 class BaseR2Storage(S3Boto3Storage):
     """R2 공통 설정을 위한 기본 클래스"""
+
     def __init__(self, *args, **kwargs):
         kwargs["bucket_name"] = getattr(settings, "R2_BUCKET_NAME", "")
         kwargs["region_name"] = getattr(settings, "R2_REGION", "auto")
@@ -18,14 +19,18 @@ class BaseR2Storage(S3Boto3Storage):
 
 class StaticStorage(BaseR2Storage):
     """정적 파일용 스토리지 (/static/)"""
+
     location = "static"
+    def url(self, name):
+        public_domain = getattr(settings, "MEDIA_PUBLIC_DOMAIN")
+        return f"{public_domain}/static/{name}"
+
 
 
 class MediaStorage(BaseR2Storage):
     """미디어 파일용 스토리지 (/media/)"""
+
     location = "media"
-
-
-class CKEditor5Storage(BaseR2Storage):
-    """CKEditor5 업로드용 스토리지 (/uploads/)"""
-    location = "uploads"
+    def url(self, name):
+        public_domain = getattr(settings, "MEDIA_PUBLIC_DOMAIN")
+        return f"{public_domain}/media/{name}"

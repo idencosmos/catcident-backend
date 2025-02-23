@@ -1,20 +1,21 @@
 # uploads/tasks.py
 from celery import shared_task
-from .models import Media
+from .utils import clean_unused_media, update_media_usage
 
 
-@shared_task
-def update_media_usage_async(media_id):
-    """비동기로 Media 객체의 사용 상태 업데이트"""
-    try:
-        media = Media.objects.get(id=media_id)
-        media.update_usage_cache()
-    except Media.DoesNotExist:
-        pass  # 존재하지 않는 경우 무시
-
-# uploads/tasks.py에 추가
 @shared_task
 def clean_unused_media_task():
-    from uploads.models import Media
-    unused = Media.objects.filter(is_used_cached=False)
-    unused.delete()
+    """사용 여부 확인 후 미사용 미디어 삭제 (주기적 작업)"""
+    clean_unused_media()  # 반환값 무시, 작업만 실행
+
+
+@shared_task
+def update_media_usage_async():
+    """Admin에서 비동기로 사용 여부 업데이트"""
+    return update_media_usage()
+
+
+@shared_task
+def clean_unused_media_async():
+    """Admin에서 비동기로 사용 여부 확인 후 삭제"""
+    return clean_unused_media()

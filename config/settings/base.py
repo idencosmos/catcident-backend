@@ -1,6 +1,7 @@
 # config/settings/base.py
 
 import environ
+import os
 from pathlib import Path
 
 # Initialize environment variables
@@ -10,6 +11,10 @@ environ.Env.read_env()  # reading .env file
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# 로그 디렉토리 생성
+LOG_DIR = BASE_DIR / "logs"
+os.makedirs(LOG_DIR, exist_ok=True)
 
 SECRET_KEY = env("SECRET_KEY", default="unsafe-secret-key")
 DEBUG = env("DEBUG", default=False)
@@ -150,14 +155,14 @@ STATIC_ROOT = "staticfiles"
 
 # Media files
 MEDIA_URL = env("MEDIA_URL", default="/media/")
-DEFAULT_FILE_STORAGE = env("DEFAULT_FILE_STORAGE")
 MEDIA_ROOT = "media"
-
 
 STORAGES = {
     "staticfiles": {"BACKEND": env("STATICFILES_STORAGE")},
     "default": {"BACKEND": env("DEFAULT_FILE_STORAGE")},
 }
+
+MEDIA_PUBLIC_DOMAIN = env("MEDIA_PUBLIC_DOMAIN")
 
 
 # Default primary key field type
@@ -193,9 +198,9 @@ CACHES = {
 }
 
 CELERY_BEAT_SCHEDULE = {
-    'clean-unused-media-every-day': {
-        'task': 'uploads.tasks.clean_unused_media_task',
-        'schedule': 864000.0,  # 240시간마다
+    "clean-unused-media-every-day": {
+        "task": "uploads.tasks.clean_unused_media_task",
+        "schedule": 86400.0,  # 하루에 한 번 실행
     },
 }
 
@@ -209,19 +214,8 @@ customColorPalette = [
     {"color": "hsl(207, 90%, 54%)", "label": "Blue"},
 ]
 
-# (1) CKEditor 5 커스텀 CSS
-# 아래처럼 Admin 등에서 로드될 추가 CSS 파일 경로 지정 가능
 CKEDITOR_5_CUSTOM_CSS = "css/ckeditor_custom.css"
-# → 이 파일은 staticfiles 디렉토리(예: myapp/static/css/ckeditor_custom.css)에 있어야 함
-#   collectstatic 후 /static/css/ckeditor_custom.css 로 배포됨
-
-# (2) CKEditor 5 파일 저장소(Cloudflare R2 설정과 연동)
-CKEDITOR_5_FILE_STORAGE = env("CKEDITOR_5_FILE_STORAGE")
-
-# (Optional) 사용자 인증 필요 정도 (any/authenticated/staff)
 CKEDITOR_5_FILE_UPLOAD_PERMISSION = "staff"
-
-# (Optional) 허용할 파일 타입
 CKEDITOR_5_ALLOW_ALL_FILE_TYPES = True
 CKEDITOR_5_UPLOAD_FILE_TYPES = ["jpeg", "jpg", "gif", "png", "pdf"]
 CKEDITOR_5_MAX_FILE_SIZE = 10  # MB
@@ -346,6 +340,34 @@ CKEDITOR_5_CONFIGS = {
             "styles": "true",
             "startIndex": "true",
             "reversed": "true",
+        },
+    },
+}
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "{levelname} {asctime} {module} {message}",
+            "style": "{",
+        },
+    },
+    "handlers": {
+        "file": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": LOG_DIR / "app.log",  # 절대 경로 사용
+            "maxBytes": 1024 * 1024 * 5,
+            "backupCount": 5,
+            "formatter": "verbose",
+            "level": "INFO",
+        },
+    },
+    "loggers": {
+        "uploads": {
+            "handlers": ["file"],
+            "level": "INFO",
+            "propagate": False,
         },
     },
 }

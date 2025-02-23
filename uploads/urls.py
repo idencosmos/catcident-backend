@@ -4,6 +4,6 @@ from .views import MediaUploadView, MediaListView
 
 
 urlpatterns = [
-    path('upload/', MediaUploadView.as_view(), name='media-upload'),
-    path('', MediaListView.as_view(), name='media-list'),
+    path("upload/", MediaUploadView.as_view(), name="media-upload"),
+    path("", MediaListView.as_view(), name="media-list"),
 ]

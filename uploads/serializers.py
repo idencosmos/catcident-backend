@@ -6,4 +6,4 @@ from .models import Media
 class MediaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Media
-        fields = ['id', 'file', 'uploaded_at', 'title', 'is_used_cached']
+        fields = ["id", "file", "uploaded_at", "title", "is_used_cached"]
