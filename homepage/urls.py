@@ -4,6 +4,8 @@ from homepage.views.global_views import (
     SiteTitleDetailAPIView, NavigationGroupListAPIView,
     FooterSectionListAPIView, FamilySiteListAPIView, CopyrightDetailAPIView
 )
+from homepage.views.home_views import HomeSectionListAPIView, HeroSlideListAPIView
+
 from homepage.views.about_views import (
     CreatorListAPIView, CreatorDetailAPIView,
     BookCategoryListAPIView, BookListAPIView, BookDetailAPIView,
@@ -27,6 +29,10 @@ urlpatterns = [
     path('global/footer-sections/', FooterSectionListAPIView.as_view(), name='footer-sections-list'),
     path('global/family-sites/', FamilySiteListAPIView.as_view(), name='family-sites-list'),
     path('global/copyright/', CopyrightDetailAPIView.as_view(), name='copyright-detail'),
+
+    # Home
+    path('home/sections/', HomeSectionListAPIView.as_view(), name='home-sections'),
+    path('home/hero/', HeroSlideListAPIView.as_view(), name='home-hero'),    
 
     # About
     path('about/creators/', CreatorListAPIView.as_view(), name='creator-list'),

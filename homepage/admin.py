@@ -3,7 +3,7 @@
 from django.contrib import admin
 from parler.admin import TranslatableAdmin
 from .models import (
-    # 기존 Global 모델
+    # Global 모델
     SiteTitle,
     NavigationGroup,
     NavigationSubMenu,
@@ -11,20 +11,23 @@ from .models import (
     FooterSubMenu,
     FamilySite,
     Copyright,
-    # 기존 About 모델
+    # Home 모델
+    HomeSection,
+    HeroSlide,
+    # About 모델
     Creator,
     BookCategory,
     Book,
     Character,
     HistoryEvent,
     LicensePage,
-    # 새로운 Resources 모델
+    # Resources 모델
     ResourceCategory,
     Resource,
-    # 새로운 News 모델
+    # News 모델
     NewsCategory,
     News,
-    # 새로운 Events 모델
+    # Events 모델
     EventCategory,
     Event,
 )
@@ -83,6 +86,50 @@ class CopyrightAdmin(admin.ModelAdmin):
     list_display = ("id", "text")
 
 
+# =================== Home Admin ===================
+
+
+@admin.register(HomeSection)
+class HomeSectionAdmin(TranslatableAdmin):
+    list_display = ("type", "layout", "is_active", "order")
+    list_editable = ("layout", "is_active", "order")
+    list_filter = ("type", "is_active")
+    ordering = ("order",)
+
+    fieldsets = (
+        (
+            None,
+            {
+                "fields": ("type", "layout", "is_active", "order"),
+            },
+        ),
+        (
+            "Custom 콘텐츠",
+            {
+                "fields": ("content",),
+                "description": "'Custom' 타입 섹션에서만 사용됩니다.",
+            },
+        ),
+    )
+
+    def get_fieldsets(self, request, obj=None):
+        fieldsets = super().get_fieldsets(request, obj)
+        if obj and obj.type != "custom":
+            return fieldsets[:-1]  # 'custom'이 아닌 경우 content 필드 숨김
+        return fieldsets
+
+
+@admin.register(HeroSlide)
+class HeroSlideAdmin(TranslatableAdmin):
+    list_display = ("title_display", "is_active", "order")
+    list_editable = ("is_active", "order")
+    list_filter = ("is_active",)
+    ordering = ("order",)
+
+    def title_display(self, obj):
+        return obj.safe_translation_getter("title", any_language=True)
+
+
 # =================== About Admin ===================
 
 
@@ -137,7 +184,9 @@ class LicensePageAdmin(TranslatableAdmin):
     def title_display(self, obj):
         return obj.safe_translation_getter("title", any_language=True)
 
+
 # =================== Resources Admin ===================
+
 
 @admin.register(ResourceCategory)
 class ResourceCategoryAdmin(TranslatableAdmin):
@@ -154,7 +203,9 @@ class ResourceAdmin(TranslatableAdmin):
     def title_display(self, obj):
         return obj.safe_translation_getter("title", any_language=True)
 
+
 # =================== News Admin ===================
+
 
 @admin.register(NewsCategory)
 class NewsCategoryAdmin(TranslatableAdmin):
@@ -171,7 +222,9 @@ class NewsAdmin(TranslatableAdmin):
     def title_display(self, obj):
         return obj.safe_translation_getter("title", any_language=True)
 
+
 # =================== Events Admin ===================
+
 
 @admin.register(EventCategory)
 class EventCategoryAdmin(TranslatableAdmin):

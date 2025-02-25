@@ -8,6 +8,7 @@ from .global_models import (
     FamilySite,
     Copyright,
 )
+from .home_models import HomeSection, HeroSlide
 from .about_models import (
     Creator,
     BookCategory,
