@@ -6,6 +6,7 @@ ALLOWED_HOSTS = ["api.catcident.local", "catcident-backend-api-1"]
 CSRF_TRUSTED_ORIGINS = ["https://api.catcident.local"]
 CORS_ALLOWED_ORIGINS = [
     "https://catcident.local",
+    "https://cdn.catcident.com",
     "http://catcident-frontend-web-1:3000",
 ]
 
