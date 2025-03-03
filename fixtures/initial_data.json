@@ -1,0 +1,251 @@
+[
+    {
+        "model": "homepage.sitetitle",
+        "pk": 1,
+        "fields": {
+            "translations": {
+                "ko": {"title": "사이트 제목"},
+                "en": {"title": "Site Title"}
+            }
+        }
+    },
+    {
+        "model": "homepage.bookcategory",
+        "pk": 1,
+        "fields": {
+            "slug": "fiction",
+            "translations": {
+                "ko": {"name": "소설"},
+                "en": {"name": "Fiction"}
+            }
+        }
+    },
+    {
+        "model": "homepage.creator",
+        "pk": 1,
+        "fields": {
+            "slug": "john-doe",
+            "translations": {
+                "ko": {"name": "존 도", "bio_summary": "작가", "description": "작가 설명"},
+                "en": {"name": "John Doe", "bio_summary": "Author", "description": "Author description"}
+            }
+        }
+    },
+    {
+        "model": "homepage.book",
+        "pk": 1,
+        "fields": {
+            "cover_image": null,
+            "pub_date": "2023-01-01",
+            "category": 1,
+            "authors": [1],
+            "translations": {
+                "ko": {"title": "책 제목", "subtitle": "부제목", "description": "책 설명"},
+                "en": {"title": "Book Title", "subtitle": "Subtitle", "description": "Book description"}
+            }
+        }
+    },
+    {
+        "model": "homepage.character",
+        "pk": 1,
+        "fields": {
+            "slug": "character-slug",
+            "image": null,
+            "books": [1],
+            "creator": 1,
+            "translations": {
+                "ko": {"name": "캐릭터 이름", "description": "캐릭터 설명"},
+                "en": {"name": "Character Name", "description": "Character description"}
+            }
+        }
+    },
+    {
+        "model": "homepage.historyevent",
+        "pk": 1,
+        "fields": {
+            "date": "2023-01-01",
+            "image": null,
+            "translations": {
+                "ko": {"title": "역사 이벤트 제목", "description": "역사 이벤트 설명"},
+                "en": {"title": "History Event Title", "description": "History Event description"}
+            }
+        }
+    },
+    {
+        "model": "homepage.licensepage",
+        "pk": 1,
+        "fields": {
+            "updated_at": "2023-01-01T00:00:00Z",
+            "translations": {
+                "ko": {"title": "라이선스 페이지 제목", "content": "라이선스 페이지 내용"},
+                "en": {"title": "License Page Title", "content": "License Page content"}
+            }
+        }
+    },
+    {
+        "model": "homepage.eventcategory",
+        "pk": 1,
+        "fields": {
+            "slug": "event-category",
+            "translations": {
+                "ko": {"name": "이벤트 카테고리"},
+                "en": {"name": "Event Category"}
+            }
+        }
+    },
+    {
+        "model": "homepage.event",
+        "pk": 1,
+        "fields": {
+            "category": 1,
+            "main_image": null,
+            "date": "2023-01-01",
+            "created_at": "2023-01-01T00:00:00Z",
+            "translations": {
+                "ko": {"title": "이벤트 제목", "description": "이벤트 설명"},
+                "en": {"title": "Event Title", "description": "Event description"}
+            }
+        }
+    },
+    {
+        "model": "homepage.newscategory",
+        "pk": 1,
+        "fields": {
+            "slug": "news-category",
+            "translations": {
+                "ko": {"name": "뉴스 카테고리"},
+                "en": {"name": "News Category"}
+            }
+        }
+    },
+    {
+        "model": "homepage.news",
+        "pk": 1,
+        "fields": {
+            "category": 1,
+            "main_image": null,
+            "date": "2023-01-01",
+            "created_at": "2023-01-01T00:00:00Z",
+            "translations": {
+                "ko": {"title": "뉴스 제목", "content": "뉴스 내용"},
+                "en": {"title": "News Title", "content": "News content"}
+            }
+        }
+    },
+    {
+        "model": "homepage.resourcecategory",
+        "pk": 1,
+        "fields": {
+            "slug": "resource-category",
+            "translations": {
+                "ko": {"name": "리소스 카테고리"},
+                "en": {"name": "Resource Category"}
+            }
+        }
+    },
+    {
+        "model": "homepage.resource",
+        "pk": 1,
+        "fields": {
+            "category": 1,
+            "main_image": null,
+            "file": null,
+            "created_at": "2023-01-01T00:00:00Z",
+            "translations": {
+                "ko": {"title": "리소스 제목", "description": "리소스 설명"},
+                "en": {"title": "Resource Title", "description": "Resource description"}
+            }
+        }
+    },
+    {
+        "model": "homepage.homesection",
+        "pk": 1,
+        "fields": {
+            "type": "books",
+            "layout": "full",
+            "is_active": true,
+            "order": 1,
+            "translations": {
+                "ko": {"content": "홈 섹션 내용"},
+                "en": {"content": "Home Section content"}
+            }
+        }
+    },
+    {
+        "model": "homepage.heroslide",
+        "pk": 1,
+        "fields": {
+            "image": null,
+            "link": "https://example.com",
+            "is_active": true,
+            "order": 1,
+            "translations": {
+                "ko": {"title": "히어로 슬라이드 제목", "description": "히어로 슬라이드 설명"},
+                "en": {"title": "Hero Slide Title", "description": "Hero Slide description"}
+            }
+        }
+    },
+    {
+        "model": "homepage.navigationgroup",
+        "pk": 1,
+        "fields": {
+            "highlighted": true,
+            "translations": {
+                "ko": {"group_label": "네비게이션 그룹"},
+                "en": {"group_label": "Navigation Group"}
+            }
+        }
+    },
+    {
+        "model": "homepage.navigationsubmenu",
+        "pk": 1,
+        "fields": {
+            "parent_group": 1,
+            "href": "/submenu",
+            "translations": {
+                "ko": {"label": "서브메뉴"},
+                "en": {"label": "SubMenu"}
+            }
+        }
+    },
+    {
+        "model": "homepage.footersection",
+        "pk": 1,
+        "fields": {
+            "translations": {
+                "ko": {"label": "푸터 섹션"},
+                "en": {"label": "Footer Section"}
+            }
+        }
+    },
+    {
+        "model": "homepage.footersubmenu",
+        "pk": 1,
+        "fields": {
+            "footer_section": 1,
+            "href": "/footersubmenu",
+            "translations": {
+                "ko": {"label": "푸터 서브메뉴"},
+                "en": {"label": "Footer SubMenu"}
+            }
+        }
+    },
+    {
+        "model": "homepage.familysite",
+        "pk": 1,
+        "fields": {
+            "href": "https://example.com",
+            "translations": {
+                "ko": {"label": "패밀리 사이트"},
+                "en": {"label": "Family Site"}
+            }
+        }
+    },
+    {
+        "model": "homepage.copyright",
+        "pk": 1,
+        "fields": {
+            "text": "© 2023 Example Company. All rights reserved."
+        }
+    }
+]

@@ -20,3 +20,8 @@ docker compose run api python manage.py makemigrations
 docker compose run api python manage.py migrate
 docker compose run api python manage.py createsuperuser
 ```
+
+```bash
+# 기본 데이터 로드 명령어
+docker compose run api python manage.py loaddata fixtures/initial_data.json
+```

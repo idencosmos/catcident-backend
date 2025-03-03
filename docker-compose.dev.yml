@@ -3,7 +3,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: python manage.py runserver 0.0.0.0:8000 # Django 개발 서버 실행
+    command: >
+      sh -c "
+      python manage.py migrate &&
+      python manage.py loaddata fixtures/initial_data.json &&
+      python manage.py runserver 0.0.0.0:8000
+      "
     env_file:
       - .env # 공통 환경 변수 파일
       - .env.dev # 개발 환경 변수 파일
