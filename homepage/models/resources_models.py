@@ -36,6 +36,8 @@ class Resource(TranslatableModel):
     file = models.ForeignKey(
         Media,
         on_delete=models.CASCADE,
+        null=True,
+        blank=True,
         related_name="homepage_resource_files",
         verbose_name="다운로드 파일"
     )

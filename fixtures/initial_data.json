@@ -2,33 +2,103 @@
     {
         "model": "homepage.sitetitle",
         "pk": 1,
+        "fields": {}
+    },
+    {
+        "model": "homepage.sitetitletranslation",
+        "pk": 1,
         "fields": {
-            "translations": {
-                "ko": {"title": "사이트 제목"},
-                "en": {"title": "Site Title"}
-            }
+            "language_code": "ko",
+            "master": 1,
+            "title": "고양이의 만행"
+        }
+    },
+    {
+        "model": "homepage.sitetitletranslation",
+        "pk": 2,
+        "fields": {
+            "language_code": "en",
+            "master": 1,
+            "title": "Catcident"
         }
     },
     {
         "model": "homepage.bookcategory",
         "pk": 1,
         "fields": {
-            "slug": "fiction",
-            "translations": {
-                "ko": {"name": "소설"},
-                "en": {"name": "Fiction"}
-            }
+            "slug": "cat-fairy-tales"
+        }
+    },
+    {
+        "model": "homepage.bookcategorytranslation",
+        "pk": 1,
+        "fields": {
+            "language_code": "ko",
+            "master": 1,
+            "name": "동화"
+        }
+    },
+    {
+        "model": "homepage.bookcategorytranslation",
+        "pk": 2,
+        "fields": {
+            "language_code": "en",
+            "master": 1,
+            "name": "Fairy Tales"
+        }
+    },
+    {
+        "model": "homepage.bookcategory",
+        "pk": 2,
+        "fields": {
+            "slug": "find-hidden-cats"
+        }
+    },
+    {
+        "model": "homepage.bookcategorytranslation",
+        "pk": 3,
+        "fields": {
+            "language_code": "ko",
+            "master": 2,
+            "name": "찾아라 시리즈"
+        }
+    },
+    {
+        "model": "homepage.bookcategorytranslation",
+        "pk": 4,
+        "fields": {
+            "language_code": "en",
+            "master": 2,
+            "name": "Find Hidden Cats"
         }
     },
     {
         "model": "homepage.creator",
         "pk": 1,
         "fields": {
-            "slug": "john-doe",
-            "translations": {
-                "ko": {"name": "존 도", "bio_summary": "작가", "description": "작가 설명"},
-                "en": {"name": "John Doe", "bio_summary": "Author", "description": "Author description"}
-            }
+            "slug": "leida"
+        }
+    },
+    {
+        "model": "homepage.creatortranslation",
+        "pk": 1,
+        "fields": {
+            "language_code": "ko",
+            "master": 1,
+            "name": "이레이다",
+            "bio_summary": "작가",
+            "description": "작가 설명"
+        }
+    },
+    {
+        "model": "homepage.creatortranslation",
+        "pk": 2,
+        "fields": {
+            "language_code": "en",
+            "master": 1,
+            "name": "Leida Lee",
+            "bio_summary": "Author",
+            "description": "Author description"
         }
     },
     {
@@ -38,11 +108,29 @@
             "cover_image": null,
             "pub_date": "2023-01-01",
             "category": 1,
-            "authors": [1],
-            "translations": {
-                "ko": {"title": "책 제목", "subtitle": "부제목", "description": "책 설명"},
-                "en": {"title": "Book Title", "subtitle": "Subtitle", "description": "Book description"}
-            }
+            "authors": [1]
+        }
+    },
+    {
+        "model": "homepage.booktranslation",
+        "pk": 1,
+        "fields": {
+            "language_code": "ko",
+            "master": 1,
+            "title": "책 제목",
+            "subtitle": "부제목",
+            "description": "책 설명"
+        }
+    },
+    {
+        "model": "homepage.booktranslation",
+        "pk": 2,
+        "fields": {
+            "language_code": "en",
+            "master": 1,
+            "title": "Book Title",
+            "subtitle": "Subtitle",
+            "description": "Book description"
         }
     },
     {
@@ -52,11 +140,27 @@
             "slug": "character-slug",
             "image": null,
             "books": [1],
-            "creator": 1,
-            "translations": {
-                "ko": {"name": "캐릭터 이름", "description": "캐릭터 설명"},
-                "en": {"name": "Character Name", "description": "Character description"}
-            }
+            "creator": 1
+        }
+    },
+    {
+        "model": "homepage.charactertranslation",
+        "pk": 1,
+        "fields": {
+            "language_code": "ko",
+            "master": 1,
+            "name": "캐릭터 이름",
+            "description": "캐릭터 설명"
+        }
+    },
+    {
+        "model": "homepage.charactertranslation",
+        "pk": 2,
+        "fields": {
+            "language_code": "en",
+            "master": 1,
+            "name": "Character Name",
+            "description": "Character description"
         }
     },
     {
@@ -64,33 +168,129 @@
         "pk": 1,
         "fields": {
             "date": "2023-01-01",
-            "image": null,
-            "translations": {
-                "ko": {"title": "역사 이벤트 제목", "description": "역사 이벤트 설명"},
-                "en": {"title": "History Event Title", "description": "History Event description"}
-            }
+            "image": null
+        }
+    },
+    {
+        "model": "homepage.historyeventtranslation",
+        "pk": 1,
+        "fields": {
+            "language_code": "ko",
+            "master": 1,
+            "title": "역사 이벤트 제목",
+            "description": "역사 이벤트 설명"
+        }
+    },
+    {
+        "model": "homepage.historyeventtranslation",
+        "pk": 2,
+        "fields": {
+            "language_code": "en",
+            "master": 1,
+            "title": "History Event Title",
+            "description": "History Event description"
         }
     },
     {
         "model": "homepage.licensepage",
         "pk": 1,
         "fields": {
-            "updated_at": "2023-01-01T00:00:00Z",
-            "translations": {
-                "ko": {"title": "라이선스 페이지 제목", "content": "라이선스 페이지 내용"},
-                "en": {"title": "License Page Title", "content": "License Page content"}
-            }
+            "updated_at": "2023-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "homepage.licensepagetranslation",
+        "pk": 1,
+        "fields": {
+            "language_code": "ko",
+            "master": 1,
+            "title": "라이선스 페이지 제목",
+            "content": "라이선스 페이지 내용"
+        }
+    },
+    {
+        "model": "homepage.licensepagetranslation",
+        "pk": 2,
+        "fields": {
+            "language_code": "en",
+            "master": 1,
+            "title": "License Page Title",
+            "content": "License Page content"
         }
     },
     {
         "model": "homepage.eventcategory",
         "pk": 1,
         "fields": {
-            "slug": "event-category",
-            "translations": {
-                "ko": {"name": "이벤트 카테고리"},
-                "en": {"name": "Event Category"}
-            }
+            "slug": "book-market"
+        }
+    },
+    {
+        "model": "homepage.eventcategorytranslation",
+        "pk": 1,
+        "fields": {
+            "language_code": "ko",
+            "master": 1,
+            "name": "북마켓"
+        }
+    },
+    {
+        "model": "homepage.eventcategorytranslation",
+        "pk": 2,
+        "fields": {
+            "language_code": "en",
+            "master": 1,
+            "name": "Book Market"
+        }
+    },
+    {
+        "model": "homepage.eventcategory",
+        "pk": 2,
+        "fields": {
+            "slug": "fair"
+        }
+    },
+    {
+        "model": "homepage.eventcategorytranslation",
+        "pk": 3,
+        "fields": {
+            "language_code": "ko",
+            "master": 2,
+            "name": "박람회"
+        }
+    },
+    {
+        "model": "homepage.eventcategorytranslation",
+        "pk": 4,
+        "fields": {
+            "language_code": "en",
+            "master": 2,
+            "name": "Fair"
+        }
+    },
+    {
+        "model": "homepage.eventcategory",
+        "pk": 3,
+        "fields": {
+            "slug": "publication"
+        }
+    },
+    {
+        "model": "homepage.eventcategorytranslation",
+        "pk": 5,
+        "fields": {
+            "language_code": "ko",
+            "master": 3,
+            "name": "출간"
+        }
+    },
+    {
+        "model": "homepage.eventcategorytranslation",
+        "pk": 6,
+        "fields": {
+            "language_code": "en",
+            "master": 3,
+            "name": "Publication"
         }
     },
     {
@@ -100,22 +300,102 @@
             "category": 1,
             "main_image": null,
             "date": "2023-01-01",
-            "created_at": "2023-01-01T00:00:00Z",
-            "translations": {
-                "ko": {"title": "이벤트 제목", "description": "이벤트 설명"},
-                "en": {"title": "Event Title", "description": "Event description"}
-            }
+            "created_at": "2023-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "homepage.eventtranslation",
+        "pk": 1,
+        "fields": {
+            "language_code": "ko",
+            "master": 1,
+            "title": "이벤트 제목",
+            "description": "이벤트 설명"
+        }
+    },
+    {
+        "model": "homepage.eventtranslation",
+        "pk": 2,
+        "fields": {
+            "language_code": "en",
+            "master": 1,
+            "title": "Event Title",
+            "description": "Event description"
         }
     },
     {
         "model": "homepage.newscategory",
         "pk": 1,
         "fields": {
-            "slug": "news-category",
-            "translations": {
-                "ko": {"name": "뉴스 카테고리"},
-                "en": {"name": "News Category"}
-            }
+            "slug": "article"
+        }
+    },
+    {
+        "model": "homepage.newscategorytranslation",
+        "pk": 1,
+        "fields": {
+            "language_code": "ko",
+            "master": 1,
+            "name": "기사"
+        }
+    },
+    {
+        "model": "homepage.newscategorytranslation",
+        "pk": 2,
+        "fields": {
+            "language_code": "en",
+            "master": 1,
+            "name": "Article"
+        }
+    },
+    {
+        "model": "homepage.newscategory",
+        "pk": 2,
+        "fields": {
+            "slug": "notice"
+        }
+    },
+    {
+        "model": "homepage.newscategorytranslation",
+        "pk": 3,
+        "fields": {
+            "language_code": "ko",
+            "master": 2,
+            "name": "공지사항"
+        }
+    },
+    {
+        "model": "homepage.newscategorytranslation",
+        "pk": 4,
+        "fields": {
+            "language_code": "en",
+            "master": 2,
+            "name": "Notice"
+        }
+    },
+    {
+        "model": "homepage.newscategory",
+        "pk": 3,
+        "fields": {
+            "slug": "press-release"
+        }
+    },
+    {
+        "model": "homepage.newscategorytranslation",
+        "pk": 5,
+        "fields": {
+            "language_code": "ko",
+            "master": 3,
+            "name": "보도자료"
+        }
+    },
+    {
+        "model": "homepage.newscategorytranslation",
+        "pk": 6,
+        "fields": {
+            "language_code": "en",
+            "master": 3,
+            "name": "Press Release"
         }
     },
     {
@@ -125,22 +405,102 @@
             "category": 1,
             "main_image": null,
             "date": "2023-01-01",
-            "created_at": "2023-01-01T00:00:00Z",
-            "translations": {
-                "ko": {"title": "뉴스 제목", "content": "뉴스 내용"},
-                "en": {"title": "News Title", "content": "News content"}
-            }
+            "created_at": "2023-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "homepage.newstranslation",
+        "pk": 1,
+        "fields": {
+            "language_code": "ko",
+            "master": 1,
+            "title": "뉴스 제목",
+            "content": "뉴스 내용"
+        }
+    },
+    {
+        "model": "homepage.newstranslation",
+        "pk": 2,
+        "fields": {
+            "language_code": "en",
+            "master": 1,
+            "title": "News Title",
+            "content": "News content"
         }
     },
     {
         "model": "homepage.resourcecategory",
         "pk": 1,
         "fields": {
-            "slug": "resource-category",
-            "translations": {
-                "ko": {"name": "리소스 카테고리"},
-                "en": {"name": "Resource Category"}
-            }
+            "slug": "coloring-book"
+        }
+    },
+    {
+        "model": "homepage.resourcecategorytranslation",
+        "pk": 1,
+        "fields": {
+            "language_code": "ko",
+            "master": 1,
+            "name": "색칠공부"
+        }
+    },
+    {
+        "model": "homepage.resourcecategorytranslation",
+        "pk": 2,
+        "fields": {
+            "language_code": "en",
+            "master": 1,
+            "name": "Coloring Book"
+        }
+    },
+    {
+        "model": "homepage.resourcecategory",
+        "pk": 2,
+        "fields": {
+            "slug": "mobile-wallpaper"
+        }
+    },
+    {
+        "model": "homepage.resourcecategorytranslation",
+        "pk": 3,
+        "fields": {
+            "language_code": "ko",
+            "master": 2,
+            "name": "휴대폰 배경화면"
+        }
+    },
+    {
+        "model": "homepage.resourcecategorytranslation",
+        "pk": 4,
+        "fields": {
+            "language_code": "en",
+            "master": 2,
+            "name": "Mobile Wallpaper"
+        }
+    },
+    {
+        "model": "homepage.resourcecategory",
+        "pk": 3,
+        "fields": {
+            "slug": "desktop-wallpaper"
+        }
+    },
+    {
+        "model": "homepage.resourcecategorytranslation",
+        "pk": 5,
+        "fields": {
+            "language_code": "ko",
+            "master": 3,
+            "name": "컴퓨터 배경화면"
+        }
+    },
+    {
+        "model": "homepage.resourcecategorytranslation",
+        "pk": 6,
+        "fields": {
+            "language_code": "en",
+            "master": 3,
+            "name": "Desktop Wallpaper"
         }
     },
     {
@@ -150,11 +510,27 @@
             "category": 1,
             "main_image": null,
             "file": null,
-            "created_at": "2023-01-01T00:00:00Z",
-            "translations": {
-                "ko": {"title": "리소스 제목", "description": "리소스 설명"},
-                "en": {"title": "Resource Title", "description": "Resource description"}
-            }
+            "created_at": "2023-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "homepage.resourcetranslation",
+        "pk": 1,
+        "fields": {
+            "language_code": "ko",
+            "master": 1,
+            "title": "리소스 제목",
+            "description": "리소스 설명"
+        }
+    },
+    {
+        "model": "homepage.resourcetranslation",
+        "pk": 2,
+        "fields": {
+            "language_code": "en",
+            "master": 1,
+            "title": "Resource Title",
+            "description": "Resource description"
         }
     },
     {
@@ -164,11 +540,25 @@
             "type": "books",
             "layout": "full",
             "is_active": true,
-            "order": 1,
-            "translations": {
-                "ko": {"content": "홈 섹션 내용"},
-                "en": {"content": "Home Section content"}
-            }
+            "order": 1
+        }
+    },
+    {
+        "model": "homepage.homesectiontranslation",
+        "pk": 1,
+        "fields": {
+            "language_code": "ko",
+            "master": 1,
+            "content": "홈 섹션 내용"
+        }
+    },
+    {
+        "model": "homepage.homesectiontranslation",
+        "pk": 2,
+        "fields": {
+            "language_code": "en",
+            "master": 1,
+            "content": "Home Section content"
         }
     },
     {
@@ -178,22 +568,52 @@
             "image": null,
             "link": "https://example.com",
             "is_active": true,
-            "order": 1,
-            "translations": {
-                "ko": {"title": "히어로 슬라이드 제목", "description": "히어로 슬라이드 설명"},
-                "en": {"title": "Hero Slide Title", "description": "Hero Slide description"}
-            }
+            "order": 1
+        }
+    },
+    {
+        "model": "homepage.heroslidetranslation",
+        "pk": 1,
+        "fields": {
+            "language_code": "ko",
+            "master": 1,
+            "title": "히어로 슬라이드 제목",
+            "description": "히어로 슬라이드 설명"
+        }
+    },
+    {
+        "model": "homepage.heroslidetranslation",
+        "pk": 2,
+        "fields": {
+            "language_code": "en",
+            "master": 1,
+            "title": "Hero Slide Title",
+            "description": "Hero Slide description"
         }
     },
     {
         "model": "homepage.navigationgroup",
         "pk": 1,
         "fields": {
-            "highlighted": true,
-            "translations": {
-                "ko": {"group_label": "네비게이션 그룹"},
-                "en": {"group_label": "Navigation Group"}
-            }
+            "highlighted": true
+        }
+    },
+    {
+        "model": "homepage.navigationgrouptranslation",
+        "pk": 1,
+        "fields": {
+            "language_code": "ko",
+            "master": 1,
+            "group_label": "소개"
+        }
+    },
+    {
+        "model": "homepage.navigationgrouptranslation",
+        "pk": 2,
+        "fields": {
+            "language_code": "en",
+            "master": 1,
+            "group_label": "About"
         }
     },
     {
@@ -201,21 +621,356 @@
         "pk": 1,
         "fields": {
             "parent_group": 1,
-            "href": "/submenu",
-            "translations": {
-                "ko": {"label": "서브메뉴"},
-                "en": {"label": "SubMenu"}
-            }
+            "href": "/about/creator"
+        }
+    },
+    {
+        "model": "homepage.navigationsubmenutranslation",
+        "pk": 1,
+        "fields": {
+            "language_code": "ko",
+            "master": 1,
+            "label": "창작자"
+        }
+    },
+    {
+        "model": "homepage.navigationsubmenutranslation",
+        "pk": 2,
+        "fields": {
+            "language_code": "en",
+            "master": 1,
+            "label": "Creator"
+        }
+    },
+    {
+        "model": "homepage.navigationsubmenu",
+        "pk": 2,
+        "fields": {
+            "parent_group": 1,
+            "href": "/about/history"
+        }
+    },
+    {
+        "model": "homepage.navigationsubmenutranslation",
+        "pk": 3,
+        "fields": {
+            "language_code": "ko",
+            "master": 2,
+            "label": "역사"
+        }
+    },
+    {
+        "model": "homepage.navigationsubmenutranslation",
+        "pk": 4,
+        "fields": {
+            "language_code": "en",
+            "master": 2,
+            "label": "History"
+        }
+    },
+    {
+        "model": "homepage.navigationsubmenu",
+        "pk": 3,
+        "fields": {
+            "parent_group": 1,
+            "href": "/about/characters"
+        }
+    },
+    {
+        "model": "homepage.navigationsubmenutranslation",
+        "pk": 5,
+        "fields": {
+            "language_code": "ko",
+            "master": 3,
+            "label": "캐릭터"
+        }
+    },
+    {
+        "model": "homepage.navigationsubmenutranslation",
+        "pk": 6,
+        "fields": {
+            "language_code": "en",
+            "master": 3,
+            "label": "Characters"
+        }
+    },
+    {
+        "model": "homepage.navigationsubmenu",
+        "pk": 4,
+        "fields": {
+            "parent_group": 1,
+            "href": "/about/licensing"
+        }
+    },
+    {
+        "model": "homepage.navigationsubmenutranslation",
+        "pk": 7,
+        "fields": {
+            "language_code": "ko",
+            "master": 4,
+            "label": "라이선스"
+        }
+    },
+    {
+        "model": "homepage.navigationsubmenutranslation",
+        "pk": 8,
+        "fields": {
+            "language_code": "en",
+            "master": 4,
+            "label": "Licensing"
+        }
+    },
+    {
+        "model": "homepage.navigationsubmenu",
+        "pk": 5,
+        "fields": {
+            "parent_group": 1,
+            "href": "/about/books"
+        }
+    },
+    {
+        "model": "homepage.navigationsubmenutranslation",
+        "pk": 9,
+        "fields": {
+            "language_code": "ko",
+            "master": 5,
+            "label": "도서"
+        }
+    },
+    {
+        "model": "homepage.navigationsubmenutranslation",
+        "pk": 10,
+        "fields": {
+            "language_code": "en",
+            "master": 5,
+            "label": "Books"
+        }
+    },
+    {
+        "model": "homepage.navigationgroup",
+        "pk": 2,
+        "fields": {
+            "highlighted": false
+        }
+    },
+    {
+        "model": "homepage.navigationgrouptranslation",
+        "pk": 11,
+        "fields": {
+            "language_code": "ko",
+            "master": 2,
+            "group_label": "리소스"
+        }
+    },
+    {
+        "model": "homepage.navigationgrouptranslation",
+        "pk": 12,
+        "fields": {
+            "language_code": "en",
+            "master": 2,
+            "group_label": "Resources"
+        }
+    },
+    {
+        "model": "homepage.navigationsubmenu",
+        "pk": 6,
+        "fields": {
+            "parent_group": 2,
+            "href": "/resources"
+        }
+    },
+    {
+        "model": "homepage.navigationsubmenutranslation",
+        "pk": 11,
+        "fields": {
+            "language_code": "ko",
+            "master": 6,
+            "label": "리소스"
+        }
+    },
+    {
+        "model": "homepage.navigationsubmenutranslation",
+        "pk": 12,
+        "fields": {
+            "language_code": "en",
+            "master": 6,
+            "label": "Resources"
+        }
+    },
+    {
+        "model": "homepage.navigationgroup",
+        "pk": 3,
+        "fields": {
+            "highlighted": false
+        }
+    },
+    {
+        "model": "homepage.navigationgrouptranslation",
+        "pk": 13,
+        "fields": {
+            "language_code": "ko",
+            "master": 3,
+            "group_label": "뉴스"
+        }
+    },
+    {
+        "model": "homepage.navigationgrouptranslation",
+        "pk": 14,
+        "fields": {
+            "language_code": "en",
+            "master": 3,
+            "group_label": "News"
+        }
+    },
+    {
+        "model": "homepage.navigationsubmenu",
+        "pk": 7,
+        "fields": {
+            "parent_group": 3,
+            "href": "/news"
+        }
+    },
+    {
+        "model": "homepage.navigationsubmenutranslation",
+        "pk": 13,
+        "fields": {
+            "language_code": "ko",
+            "master": 7,
+            "label": "뉴스"
+        }
+    },
+    {
+        "model": "homepage.navigationsubmenutranslation",
+        "pk": 14,
+        "fields": {
+            "language_code": "en",
+            "master": 7,
+            "label": "News"
+        }
+    },
+    {
+        "model": "homepage.navigationgroup",
+        "pk": 4,
+        "fields": {
+            "highlighted": false
+        }
+    },
+    {
+        "model": "homepage.navigationgrouptranslation",
+        "pk": 15,
+        "fields": {
+            "language_code": "ko",
+            "master": 4,
+            "group_label": "이벤트"
+        }
+    },
+    {
+        "model": "homepage.navigationgrouptranslation",
+        "pk": 16,
+        "fields": {
+            "language_code": "en",
+            "master": 4,
+            "group_label": "Events"
+        }
+    },
+    {
+        "model": "homepage.navigationsubmenu",
+        "pk": 8,
+        "fields": {
+            "parent_group": 4,
+            "href": "/events"
+        }
+    },
+    {
+        "model": "homepage.navigationsubmenutranslation",
+        "pk": 15,
+        "fields": {
+            "language_code": "ko",
+            "master": 8,
+            "label": "이벤트"
+        }
+    },
+    {
+        "model": "homepage.navigationsubmenutranslation",
+        "pk": 16,
+        "fields": {
+            "language_code": "en",
+            "master": 8,
+            "label": "Events"
+        }
+    },
+    {
+        "model": "homepage.navigationgroup",
+        "pk": 5,
+        "fields": {
+            "highlighted": false
+        }
+    },
+    {
+        "model": "homepage.navigationgrouptranslation",
+        "pk": 17,
+        "fields": {
+            "language_code": "ko",
+            "master": 5,
+            "group_label": "라이선스"
+        }
+    },
+    {
+        "model": "homepage.navigationgrouptranslation",
+        "pk": 18,
+        "fields": {
+            "language_code": "en",
+            "master": 5,
+            "group_label": "Licensing"
+        }
+    },
+    {
+        "model": "homepage.navigationsubmenu",
+        "pk": 9,
+        "fields": {
+            "parent_group": 5,
+            "href": "/licensing"
+        }
+    },
+    {
+        "model": "homepage.navigationsubmenutranslation",
+        "pk": 17,
+        "fields": {
+            "language_code": "ko",
+            "master": 9,
+            "label": "라이선스"
+        }
+    },
+    {
+        "model": "homepage.navigationsubmenutranslation",
+        "pk": 18,
+        "fields": {
+            "language_code": "en",
+            "master": 9,
+            "label": "Licensing"
         }
     },
     {
         "model": "homepage.footersection",
         "pk": 1,
+        "fields": {}
+    },
+    {
+        "model": "homepage.footersectiontranslation",
+        "pk": 1,
         "fields": {
-            "translations": {
-                "ko": {"label": "푸터 섹션"},
-                "en": {"label": "Footer Section"}
-            }
+            "language_code": "ko",
+            "master": 1,
+            "label": "회사 소개"
+        }
+    },
+    {
+        "model": "homepage.footersectiontranslation",
+        "pk": 2,
+        "fields": {
+            "language_code": "en",
+            "master": 1,
+            "label": "About Us"
         }
     },
     {
@@ -223,29 +978,560 @@
         "pk": 1,
         "fields": {
             "footer_section": 1,
-            "href": "/footersubmenu",
-            "translations": {
-                "ko": {"label": "푸터 서브메뉴"},
-                "en": {"label": "Footer SubMenu"}
-            }
+            "href": "/about/creator"
+        }
+    },
+    {
+        "model": "homepage.footersubmenutranslation",
+        "pk": 1,
+        "fields": {
+            "language_code": "ko",
+            "master": 1,
+            "label": "창작자"
+        }
+    },
+    {
+        "model": "homepage.footersubmenutranslation",
+        "pk": 2,
+        "fields": {
+            "language_code": "en",
+            "master": 1,
+            "label": "Creator"
+        }
+    },
+    {
+        "model": "homepage.footersubmenu",
+        "pk": 2,
+        "fields": {
+            "footer_section": 1,
+            "href": "/about/history"
+        }
+    },
+    {
+        "model": "homepage.footersubmenutranslation",
+        "pk": 3,
+        "fields": {
+            "language_code": "ko",
+            "master": 2,
+            "label": "역사"
+        }
+    },
+    {
+        "model": "homepage.footersubmenutranslation",
+        "pk": 4,
+        "fields": {
+            "language_code": "en",
+            "master": 2,
+            "label": "History"
+        }
+    },
+    {
+        "model": "homepage.footersubmenu",
+        "pk": 3,
+        "fields": {
+            "footer_section": 1,
+            "href": "/about/characters"
+        }
+    },
+    {
+        "model": "homepage.footersubmenutranslation",
+        "pk": 5,
+        "fields": {
+            "language_code": "ko",
+            "master": 3,
+            "label": "캐릭터"
+        }
+    },
+    {
+        "model": "homepage.footersubmenutranslation",
+        "pk": 6,
+        "fields": {
+            "language_code": "en",
+            "master": 3,
+            "label": "Characters"
+        }
+    },
+    {
+        "model": "homepage.footersection",
+        "pk": 2,
+        "fields": {}
+    },
+    {
+        "model": "homepage.footersectiontranslation",
+        "pk": 3,
+        "fields": {
+            "language_code": "ko",
+            "master": 2,
+            "label": "서비스"
+        }
+    },
+    {
+        "model": "homepage.footersectiontranslation",
+        "pk": 4,
+        "fields": {
+            "language_code": "en",
+            "master": 2,
+            "label": "Services"
+        }
+    },
+    {
+        "model": "homepage.footersubmenu",
+        "pk": 4,
+        "fields": {
+            "footer_section": 2,
+            "href": "/about/books"
+        }
+    },
+    {
+        "model": "homepage.footersubmenutranslation",
+        "pk": 7,
+        "fields": {
+            "language_code": "ko",
+            "master": 4,
+            "label": "도서"
+        }
+    },
+    {
+        "model": "homepage.footersubmenutranslation",
+        "pk": 8,
+        "fields": {
+            "language_code": "en",
+            "master": 4,
+            "label": "Books"
+        }
+    },
+    {
+        "model": "homepage.footersubmenu",
+        "pk": 5,
+        "fields": {
+            "footer_section": 2,
+            "href": "/resources"
+        }
+    },
+    {
+        "model": "homepage.footersubmenutranslation",
+        "pk": 9,
+        "fields": {
+            "language_code": "ko",
+            "master": 5,
+            "label": "리소스"
+        }
+    },
+    {
+        "model": "homepage.footersubmenutranslation",
+        "pk": 10,
+        "fields": {
+            "language_code": "en",
+            "master": 5,
+            "label": "Resources"
+        }
+    },
+    {
+        "model": "homepage.footersubmenu",
+        "pk": 6,
+        "fields": {
+            "footer_section": 2,
+            "href": "/licensing"
+        }
+    },
+    {
+        "model": "homepage.footersubmenutranslation",
+        "pk": 11,
+        "fields": {
+            "language_code": "ko",
+            "master": 6,
+            "label": "라이선스"
+        }
+    },
+    {
+        "model": "homepage.footersubmenutranslation",
+        "pk": 12,
+        "fields": {
+            "language_code": "en",
+            "master": 6,
+            "label": "Licensing"
+        }
+    },
+    {
+        "model": "homepage.footersection",
+        "pk": 3,
+        "fields": {}
+    },
+    {
+        "model": "homepage.footersectiontranslation",
+        "pk": 5,
+        "fields": {
+            "language_code": "ko",
+            "master": 3,
+            "label": "정보 및 이벤트"
+        }
+    },
+    {
+        "model": "homepage.footersectiontranslation",
+        "pk": 6,
+        "fields": {
+            "language_code": "en",
+            "master": 3,
+            "label": "News & Events"
+        }
+    },
+    {
+        "model": "homepage.footersubmenu",
+        "pk": 7,
+        "fields": {
+            "footer_section": 3,
+            "href": "/news"
+        }
+    },
+    {
+        "model": "homepage.footersubmenutranslation",
+        "pk": 13,
+        "fields": {
+            "language_code": "ko",
+            "master": 7,
+            "label": "뉴스"
+        }
+    },
+    {
+        "model": "homepage.footersubmenutranslation",
+        "pk": 14,
+        "fields": {
+            "language_code": "en",
+            "master": 7,
+            "label": "News"
+        }
+    },
+    {
+        "model": "homepage.footersubmenu",
+        "pk": 8,
+        "fields": {
+            "footer_section": 3,
+            "href": "/events"
+        }
+    },
+    {
+        "model": "homepage.footersubmenutranslation",
+        "pk": 15,
+        "fields": {
+            "language_code": "ko",
+            "master": 8,
+            "label": "이벤트"
+        }
+    },
+    {
+        "model": "homepage.footersubmenutranslation",
+        "pk": 16,
+        "fields": {
+            "language_code": "en",
+            "master": 8,
+            "label": "Events"
+        }
+    },
+    {
+        "model": "homepage.footersection",
+        "pk": 4,
+        "fields": {}
+    },
+    {
+        "model": "homepage.footersectiontranslation",
+        "pk": 7,
+        "fields": {
+            "language_code": "ko",
+            "master": 4,
+            "label": "법적 정보"
+        }
+    },
+    {
+        "model": "homepage.footersectiontranslation",
+        "pk": 8,
+        "fields": {
+            "language_code": "en",
+            "master": 4,
+            "label": "Legal"
+        }
+    },
+    {
+        "model": "homepage.footersubmenu",
+        "pk": 9,
+        "fields": {
+            "footer_section": 4,
+            "href": "/terms"
+        }
+    },
+    {
+        "model": "homepage.footersubmenutranslation",
+        "pk": 17,
+        "fields": {
+            "language_code": "ko",
+            "master": 9,
+            "label": "이용약관"
+        }
+    },
+    {
+        "model": "homepage.footersubmenutranslation",
+        "pk": 18,
+        "fields": {
+            "language_code": "en",
+            "master": 9,
+            "label": "Terms of Service"
+        }
+    },
+    {
+        "model": "homepage.footersubmenu",
+        "pk": 10,
+        "fields": {
+            "footer_section": 4,
+            "href": "/privacy"
+        }
+    },
+    {
+        "model": "homepage.footersubmenutranslation",
+        "pk": 19,
+        "fields": {
+            "language_code": "ko",
+            "master": 10,
+            "label": "개인정보 처리방침"
+        }
+    },
+    {
+        "model": "homepage.footersubmenutranslation",
+        "pk": 20,
+        "fields": {
+            "language_code": "en",
+            "master": 10,
+            "label": "Privacy Policy"
+        }
+    },
+    {
+        "model": "homepage.footersection",
+        "pk": 5,
+        "fields": {}
+    },
+    {
+        "model": "homepage.footersectiontranslation",
+        "pk": 9,
+        "fields": {
+            "language_code": "ko",
+            "master": 5,
+            "label": "연락처"
+        }
+    },
+    {
+        "model": "homepage.footersectiontranslation",
+        "pk": 10,
+        "fields": {
+            "language_code": "en",
+            "master": 5,
+            "label": "Contact"
+        }
+    },
+    {
+        "model": "homepage.footersubmenu",
+        "pk": 11,
+        "fields": {
+            "footer_section": 5,
+            "href": "/contact"
+        }
+    },
+    {
+        "model": "homepage.footersubmenutranslation",
+        "pk": 21,
+        "fields": {
+            "language_code": "ko",
+            "master": 11,
+            "label": "문의하기"
+        }
+    },
+    {
+        "model": "homepage.footersubmenutranslation",
+        "pk": 22,
+        "fields": {
+            "language_code": "en",
+            "master": 11,
+            "label": "Contact Us"
+        }
+    },
+    {
+        "model": "homepage.footersubmenu",
+        "pk": 12,
+        "fields": {
+            "footer_section": 5,
+            "href": "mailto:support@catcident.com"
+        }
+    },
+    {
+        "model": "homepage.footersubmenutranslation",
+        "pk": 23,
+        "fields": {
+            "language_code": "ko",
+            "master": 12,
+            "label": "이메일: support@catcident.com"
+        }
+    },
+    {
+        "model": "homepage.footersubmenutranslation",
+        "pk": 24,
+        "fields": {
+            "language_code": "en",
+            "master": 12,
+            "label": "Email: support@catcident.com"
+        }
+    },
+    {
+        "model": "homepage.footersubmenu",
+        "pk": 13,
+        "fields": {
+            "footer_section": 5,
+            "href": "tel:+8210000000000"
+        }
+    },
+    {
+        "model": "homepage.footersubmenutranslation",
+        "pk": 25,
+        "fields": {
+            "language_code": "ko",
+            "master": 13,
+            "label": "전화: 000-0000-0000"
+        }
+    },
+    {
+        "model": "homepage.footersubmenutranslation",
+        "pk": 26,
+        "fields": {
+            "language_code": "en",
+            "master": 13,
+            "label": "Phone: 000-0000-0000"
+        }
+    },
+    {
+        "model": "homepage.footersection",
+        "pk": 1,
+        "fields": {}
+    },
+    {
+        "model": "homepage.footersectiontranslation",
+        "pk": 1,
+        "fields": {
+            "language_code": "ko",
+            "master": 1,
+            "label": "푸터 섹션"
+        }
+    },
+    {
+        "model": "homepage.footersectiontranslation",
+        "pk": 2,
+        "fields": {
+            "language_code": "en",
+            "master": 1,
+            "label": "Footer Section"
+        }
+    },
+    {
+        "model": "homepage.footersubmenu",
+        "pk": 1,
+        "fields": {
+            "footer_section": 1,
+            "href": "/footersubmenu"
+        }
+    },
+    {
+        "model": "homepage.footersubmenutranslation",
+        "pk": 1,
+        "fields": {
+            "language_code": "ko",
+            "master": 1,
+            "label": "푸터 서브메뉴"
+        }
+    },
+    {
+        "model": "homepage.footersubmenutranslation",
+        "pk": 2,
+        "fields": {
+            "language_code": "en",
+            "master": 1,
+            "label": "Footer SubMenu"
         }
     },
     {
         "model": "homepage.familysite",
         "pk": 1,
         "fields": {
-            "href": "https://example.com",
-            "translations": {
-                "ko": {"label": "패밀리 사이트"},
-                "en": {"label": "Family Site"}
-            }
+            "href": "https://catking2002.tistory.com"
+        }
+    },
+    {
+        "model": "homepage.familysitetranslation",
+        "pk": 1,
+        "fields": {
+            "language_code": "ko",
+            "master": 1,
+            "label": "캣킹2002"
+        }
+    },
+    {
+        "model": "homepage.familysitetranslation",
+        "pk": 2,
+        "fields": {
+            "language_code": "en",
+            "master": 1,
+            "label": "CatKing2002"
+        }
+    },
+    {
+        "model": "homepage.familysite",
+        "pk": 2,
+        "fields": {
+            "href": "https://sadam.media"
+        }
+    },
+    {
+        "model": "homepage.familysitetranslation",
+        "pk": 3,
+        "fields": {
+            "language_code": "ko",
+            "master": 2,
+            "label": "사담미디어"
+        }
+    },
+    {
+        "model": "homepage.familysitetranslation",
+        "pk": 4,
+        "fields": {
+            "language_code": "en",
+            "master": 2,
+            "label": "Sadam Media"
+        }
+    },
+    {
+        "model": "homepage.familysite",
+        "pk": 3,
+        "fields": {
+            "href": "https://epadbook.com"
+        }
+    },
+    {
+        "model": "homepage.familysitetranslation",
+        "pk": 5,
+        "fields": {
+            "language_code": "ko",
+            "master": 3,
+            "label": "이패드북"
+        }
+    },
+    {
+        "model": "homepage.familysitetranslation",
+        "pk": 6,
+        "fields": {
+            "language_code": "en",
+            "master": 3,
+            "label": "EpadBook"
         }
     },
     {
         "model": "homepage.copyright",
         "pk": 1,
         "fields": {
-            "text": "© 2023 Example Company. All rights reserved."
+            "text": "Catcident. All rights reserved."
         }
     }
 ]
