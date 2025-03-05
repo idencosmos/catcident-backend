@@ -595,7 +595,7 @@
         "model": "homepage.navigationgroup",
         "pk": 1,
         "fields": {
-            "highlighted": true
+            "highlighted": false
         }
     },
     {
@@ -903,7 +903,7 @@
         "model": "homepage.navigationgroup",
         "pk": 5,
         "fields": {
-            "highlighted": false
+            "highlighted": true
         }
     },
     {
@@ -929,7 +929,7 @@
         "pk": 9,
         "fields": {
             "parent_group": 5,
-            "href": "/licensing"
+            "href": "/about/licensing"
         }
     },
     {
