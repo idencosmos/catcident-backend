@@ -1,14 +1,20 @@
 {% extends "otp/base.html" %}
 
-{% block title %}OTP 인증 | Catcident Admin{% endblock %}
+{% block title %}2단계 인증 | Catcident Admin{% endblock %}
 
 {% block header %}2단계 인증{% endblock %}
 
 {% block content %}
     <div class="mb-4">
-        <p class="info-text">계정 보안을 위해 2단계 인증이 필요합니다. 인증 앱에 표시된 코드 또는 이메일로 받은 인증 코드를 입력하세요.</p>
+        <p class="info-text">
+            {% if is_email_device %}
+                이메일로 전송된 6자리 인증 코드를 입력하세요.
+            {% else %}
+                인증 앱에 표시된 6자리 인증 코드를 입력하세요.
+            {% endif %}
+        </p>
     </div>
-    
+
     <form method="post" action="{% url 'verify_otp' %}">
         {% csrf_token %}
         
@@ -38,9 +44,21 @@
             <button type="submit" class="btn btn-primary">인증하기</button>
         </div>
     </form>
-    
-    <div class="mt-4 text-center">
-        <p class="small text-muted">문제가 있으신가요? 관리자에게 문의하세요.</p>
+
+    {% if is_email_device %}
+    <form method="post" class="mt-3">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="resend">
+        <div class="d-grid">
+            <button type="submit" class="btn btn-outline-secondary">인증 코드 재발송</button>
+        </div>
+    </form>
+    {% endif %}
+
+    <div class="mt-3 text-center">
+        <a href="{% url 'admin:logout' %}" class="text-decoration-none text-secondary small">
+            <i class="bi bi-arrow-left"></i> 로그아웃
+        </a>
     </div>
 {% endblock %}
 

@@ -6,9 +6,6 @@
 
 {% block content %}
     <div class="mb-4">
-        <div class="alert alert-info" role="alert">
-            <i class="bi bi-info-circle"></i> 등록된 이메일로 인증 코드가 발송되었습니다.
-        </div>
         <p class="info-text">이메일로 전송된 6자리 인증 코드를 입력하세요.</p>
     </div>
     
@@ -25,6 +22,14 @@
         
         <div class="d-grid">
             <button type="submit" class="btn btn-primary">인증 확인</button>
+        </div>
+    </form>
+
+    <form method="post" class="mt-3">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="resend">
+        <div class="d-grid">
+            <button type="submit" class="btn btn-outline-secondary">인증 코드 재발송</button>
         </div>
     </form>
     
@@ -48,25 +53,13 @@ document.addEventListener('DOMContentLoaded', function() {
         this.value = this.value.replace(/[^0-9]/g, '');
     });
     
-    // Add countdown timer (optional)
-    let timeLeft = 300; // 5 minutes in seconds
-    const timerElement = document.createElement('div');
-    timerElement.className = 'text-center mt-3 small text-muted';
-    timerElement.innerHTML = '코드 유효시간: <span id="timer">5:00</span>';
-    document.querySelector('form').appendChild(timerElement);
-    
-    const timerSpan = document.getElementById('timer');
-    const timer = setInterval(function() {
-        timeLeft--;
-        const minutes = Math.floor(timeLeft / 60);
-        const seconds = timeLeft % 60;
-        timerSpan.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-        
-        if (timeLeft <= 0) {
-            clearInterval(timer);
-            timerSpan.textContent = '만료됨';
+    // Add form validation
+    document.querySelector('form').addEventListener('submit', function(e) {
+        if (!/^\d{6}$/.test(tokenInput.value)) {
+            e.preventDefault();
+            tokenInput.classList.add('is-invalid');
         }
-    }, 1000);
+    });
 });
 </script>
 {% endblock %}
