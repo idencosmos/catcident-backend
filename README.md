@@ -13,6 +13,8 @@ CatCident Backend는 [고양이의 만행] 사이트를 위한 Django 기반 콘
 - **RESTful API**: 프론트엔드 애플리케이션에 데이터를 제공하는 API
 - **미디어 파일 관리**: 클라우드 스토리지(Cloudflare R2) 통합
 - **비동기 작업 처리**: Celery와 Redis를 활용한 백그라운드 작업
+- **보안 인증 시스템**: 2단계 인증(OTP)을 통한 관리자 보안 강화
+- **다양한 OTP 옵션**: TOTP(Google/Microsoft Authenticator) 및 이메일 OTP 지원
 
 ## 🏗️ 기술 스택
 
@@ -22,6 +24,7 @@ CatCident Backend는 [고양이의 만행] 사이트를 위한 Django 기반 콘
 - **비동기 작업**: Celery
 - **스토리지**: Cloudflare R2 (S3 호환)
 - **컨테이너화**: Docker, Docker Compose
+- **보안**: Django OTP
 
 ## 📋 주요 앱 구조
 
@@ -38,6 +41,10 @@ CatCident Backend는 [고양이의 만행] 사이트를 위한 Django 기반 콘
 
 ### 3. Accounts 앱
 - 사용자 인증 및 권한 관리
+- 2단계 인증(OTP) 관리
+  - TOTP(시간 기반 일회용 비밀번호) 인증
+  - 이메일 기반 OTP 인증
+  - 인증 시도 제한 및 차단 기능
 
 ## 💾 모델 구조
 
@@ -113,6 +120,17 @@ DEFAULT_FILE_STORAGE=uploads.storages.MediaStorage
 ALLOWED_HOSTS=localhost,127.0.0.1
 CSRF_TRUSTED_ORIGINS=http://localhost,http://127.0.0.1
 CORS_ALLOWED_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
+
+# OTP 설정
+OTP_TOTP_ISSUER=Catcident API
+EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
+EMAIL_HOST=your-smtp-host
+EMAIL_PORT=587
+EMAIL_USE_TLS=True
+EMAIL_HOST_USER=your-email
+EMAIL_HOST_PASSWORD=your-email-password
+OTP_EMAIL_SUBJECT=Your OTP Token
+OTP_EMAIL_BODY_TEMPLATE=Your one-time password is: {{ token }}
 ```
 
 4. 도커 컨테이너 실행
@@ -166,6 +184,27 @@ docker-compose up --build -d
 ```bash
 docker compose run api python manage.py collectstatic --no-input
 ```
+
+## 🔒 보안 기능
+
+### 2단계 인증 (OTP)
+
+관리자 패널에 대한 보안 강화를 위해 2단계 인증을 구현했습니다:
+
+1. **인증 방식 선택**
+   - TOTP: Google/Microsoft Authenticator 앱 사용
+   - 이메일: 등록된 이메일로 OTP 코드 전송
+
+2. **보안 기능**
+   - 로그인 후 OTP 설정 강제
+   - 5회 인증 실패 시 10분간 차단
+   - 이메일 OTP 재전송 30초 제한
+   - IP 및 User-Agent 검증을 통한 세션 보안
+
+3. **OTP 설정 방법**
+   - 관리자 로그인 후 자동으로 OTP 설정 페이지로 이동
+   - TOTP: QR 코드 스캔 후 인증 코드 입력
+   - 이메일: 전송된 인증 코드 입력
 
 ## 📝 API 문서
 
