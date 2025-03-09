@@ -1,49 +1,67 @@
 # config/settings/base.py
+"""
+기본 Django 설정 파일
+개발 및 프로덕션 환경에서 공통으로 사용되는 설정들이 포함됩니다.
+"""
 
 import environ
 import os
 from pathlib import Path
 
-# Initialize environment variables
-env = environ.Env(DEBUG=(bool, False))  # Default value for DEBUG is False
+# =================================================
+# 기본 설정 및 환경변수
+# =================================================
+# 환경변수 초기화
+env = environ.Env(DEBUG=(bool, False))
+environ.Env.read_env()  # .env 파일 읽기
 
-environ.Env.read_env()  # reading .env file
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+# 프로젝트 기본 경로 설정
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # 로그 디렉토리 생성
 LOG_DIR = BASE_DIR / "logs"
 os.makedirs(LOG_DIR, exist_ok=True)
 
+# 코어 설정
 SECRET_KEY = env("SECRET_KEY", default="unsafe-secret-key")
 DEBUG = env("DEBUG", default=False)
-
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[])
 CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=[])
 
-# Application definition
-
+# =================================================
+# 애플리케이션 정의
+# =================================================
 INSTALLED_APPS = [
+    # Django 기본 앱
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # Third-party apps
+    
+    # 보안 관련 앱
+    "django_otp",
+    "django_otp.plugins.otp_totp",
+    "django_otp.plugins.otp_email",
+    
+    # 서드파티 앱
     "rest_framework",
     "corsheaders",
     "django_ckeditor_5",
     "parler",
     "storages",
     "django_celery_beat",
-    # 공통 앱
+    
+    # 프로젝트 앱
     "accounts",
     "homepage",
     "uploads",
 ]
 
+# =================================================
+# 미들웨어 설정
+# =================================================
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -52,10 +70,15 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django_otp.middleware.OTPMiddleware",  # AuthenticationMiddleware 다음에 위치
+    "accounts.middleware.OTPSetupMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+# =================================================
+# URL 및 템플릿 설정
+# =================================================
 ROOT_URLCONF = "config.urls"
 
 TEMPLATES = [
@@ -76,10 +99,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 
-
-# Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
+# =================================================
+# 데이터베이스 설정
+# =================================================
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
@@ -91,12 +113,13 @@ DATABASES = {
     }
 }
 
-# CORS 허용
+# =================================================
+# 보안 설정
+# =================================================
+# CORS 설정
 CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS", default=[])
 
-# Password validation
-# https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
-
+# 비밀번호 유효성 검증
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
@@ -112,12 +135,39 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# 인증 및 세션 설정
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+SESSION_COOKIE_AGE = 86400  # 24시간
 
-# Internationalization
-# https://docs.djangoproject.com/en/5.1/topics/i18n/
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+]
+
+# 사용자 모델
+AUTH_USER_MODEL = "accounts.CustomUser"
+
+# OTP 인증 설정
+OTP_TOTP_ISSUER = "Catcident API"
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_PORT = env('EMAIL_PORT')
+EMAIL_USE_TLS = env('EMAIL_USE_TLS')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+OTP_EMAIL_SUBJECT = 'Your OTP Token'
+OTP_EMAIL_BODY_TEMPLATE = 'Your one-time password is: {{ token }}'
+
+# =================================================
+# 국제화 설정
+# =================================================
+LANGUAGE_CODE = "ko"  # 기본 언어
+LANGUAGES = (
+    ("ko", "Korean"),
+    ("en", "English"),
+)
 
 PARLER_LANGUAGES = {
-    None: (  # Default site
+    None: (  # 기본 사이트
         {"code": "ko"},
         {"code": "en"},
     ),
@@ -132,13 +182,9 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-LANGUAGE_CODE = "ko"  # 기본 언어
-LANGUAGES = (
-    ("ko", "Korean"),
-    ("en", "English"),
-    # 필요하면 추가 언어
-)
-
+# =================================================
+# 파일 저장소 설정
+# =================================================
 # R2 설정
 R2_BUCKET_NAME = env("R2_BUCKET_NAME")
 R2_REGION = env("R2_REGION", default="auto")
@@ -146,39 +192,37 @@ R2_ENDPOINT_URL = env("R2_ENDPOINT_URL")
 R2_ACCESS_KEY_ID = env("R2_ACCESS_KEY_ID")
 R2_SECRET_ACCESS_KEY = env("R2_SECRET_ACCESS_KEY")
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
-
-# Static files
+# 정적 파일 설정
 STATIC_URL = env("STATIC_URL", default="/static/")
 STATIC_ROOT = "staticfiles"
 
-# Media files
+# 미디어 파일 설정
 MEDIA_URL = env("MEDIA_URL", default="/media/")
 MEDIA_ROOT = "media"
+MEDIA_PUBLIC_DOMAIN = env("MEDIA_PUBLIC_DOMAIN")
 
+# 스토리지 백엔드
 STORAGES = {
     "staticfiles": {"BACKEND": env("STATICFILES_STORAGE")},
     "default": {"BACKEND": env("DEFAULT_FILE_STORAGE")},
 }
 
-MEDIA_PUBLIC_DOMAIN = env("MEDIA_PUBLIC_DOMAIN")
-
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
-
+# =================================================
+# API 및 DB 설정
+# =================================================
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# DRF 기본 설정(필요 시)
+# DRF 설정
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.AllowAny",
     ],
-    # 필요하다면 추가
 }
 
-# Celery 설정
+# =================================================
+# Celery 및 캐싱 설정
+# =================================================
+# Celery
 CELERY_BROKER_URL = env("CELERY_BROKER_URL")
 CELERY_RESULT_BACKEND = env("CELERY_RESULT_BACKEND")
 CELERY_ACCEPT_CONTENT = ["json"]
@@ -186,7 +230,15 @@ CELERY_TASK_SERIALIZER = "json"
 CELERY_RESULT_SERIALIZER = "json"
 CELERY_TIMEZONE = "Asia/Seoul"
 
-# Redis 캐시 설정
+# 주기적 작업
+CELERY_BEAT_SCHEDULE = {
+    "clean-unused-media-every-day": {
+        "task": "uploads.tasks.clean_unused_media_task",
+        "schedule": 86400.0,  # 하루에 한 번 실행
+    },
+}
+
+# Redis 캐시
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
@@ -197,14 +249,10 @@ CACHES = {
     }
 }
 
-CELERY_BEAT_SCHEDULE = {
-    "clean-unused-media-every-day": {
-        "task": "uploads.tasks.clean_unused_media_task",
-        "schedule": 86400.0,  # 하루에 한 번 실행
-    },
-}
-
-# CKEditor 5 Settings
+# =================================================
+# CKEditor 5 설정
+# =================================================
+# 컬러 팔레트
 customColorPalette = [
     {"color": "hsl(4, 90%, 58%)", "label": "Red"},
     {"color": "hsl(340, 82%, 52%)", "label": "Pink"},
@@ -214,12 +262,14 @@ customColorPalette = [
     {"color": "hsl(207, 90%, 54%)", "label": "Blue"},
 ]
 
+# 기본 설정
 CKEDITOR_5_CUSTOM_CSS = "css/ckeditor_custom.css"
 CKEDITOR_5_FILE_UPLOAD_PERMISSION = "staff"
 CKEDITOR_5_ALLOW_ALL_FILE_TYPES = True
 CKEDITOR_5_UPLOAD_FILE_TYPES = ["jpeg", "jpg", "gif", "png", "pdf"]
 CKEDITOR_5_MAX_FILE_SIZE = 10  # MB
 
+# 에디터 구성
 CKEDITOR_5_CONFIGS = {
     "default": {
         "blockToolbar": [
@@ -344,6 +394,9 @@ CKEDITOR_5_CONFIGS = {
     },
 }
 
+# =================================================
+# 로깅 설정
+# =================================================
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -356,8 +409,8 @@ LOGGING = {
     "handlers": {
         "file": {
             "class": "logging.handlers.RotatingFileHandler",
-            "filename": LOG_DIR / "app.log",  # 절대 경로 사용
-            "maxBytes": 1024 * 1024 * 5,
+            "filename": LOG_DIR / "app.log",
+            "maxBytes": 1024 * 1024 * 5,  # 5MB
             "backupCount": 5,
             "formatter": "verbose",
             "level": "INFO",

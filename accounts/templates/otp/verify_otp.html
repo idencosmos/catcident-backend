@@ -1,0 +1,90 @@
+{% extends "otp/base.html" %}
+
+{% block title %}OTP 인증 | Catcident Admin{% endblock %}
+
+{% block header %}2단계 인증{% endblock %}
+
+{% block content %}
+    <div class="mb-4">
+        <p class="info-text">계정 보안을 위해 2단계 인증이 필요합니다. 인증 앱에 표시된 코드 또는 이메일로 받은 인증 코드를 입력하세요.</p>
+    </div>
+    
+    <form method="post" action="{% url 'verify_otp' %}">
+        {% csrf_token %}
+        
+        {% if form.non_field_errors %}
+        <div class="alert alert-danger" role="alert">
+            {% for error in form.non_field_errors %}
+                {{ error }}
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        <div class="mb-4">
+            <label for="{{ form.otp_token.id_for_label }}" class="form-label">인증 코드</label>
+            {% if form.otp_token.errors %}
+                <div class="error-message">{{ form.otp_token.errors.0 }}</div>
+            {% endif %}
+            <input type="text" name="{{ form.otp_token.name }}" id="{{ form.otp_token.id_for_label }}" 
+                   class="form-control {% if form.otp_token.errors %}is-invalid{% endif %}"
+                   placeholder="6자리 코드 입력" required inputmode="numeric" pattern="[0-9]*" 
+                   maxlength="6" autocomplete="off">
+            {% if error %}
+                <div class="error-message">{{ error }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="d-grid">
+            <button type="submit" class="btn btn-primary">인증하기</button>
+        </div>
+    </form>
+    
+    <div class="mt-4 text-center">
+        <p class="small text-muted">문제가 있으신가요? 관리자에게 문의하세요.</p>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tokenInput = document.getElementById('{{ form.otp_token.id_for_label }}');
+    
+    // Focus on the input field
+    tokenInput.focus();
+    
+    // Restrict input to numbers only
+    tokenInput.addEventListener('input', function() {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
+    
+    // 자동 제출 기능 제거 - 버그 방지를 위해
+    /* 
+    // Auto-submit when 6 digits entered
+    if (this.value.length === 6) {
+        setTimeout(() => {
+            document.querySelector('form').submit();
+        }, 300);
+    }
+    */
+
+    // 폼 제출 전에 유효성 검증
+    document.querySelector('form').addEventListener('submit', function(e) {
+        const token = tokenInput.value;
+        
+        // 기본 유효성 검사
+        if (token.length !== 6 || !/^\d+$/.test(token)) {
+            e.preventDefault();
+            // 오류 메시지 표시
+            let errorDiv = document.querySelector('.error-message');
+            if (!errorDiv) {
+                errorDiv = document.createElement('div');
+                errorDiv.className = 'error-message';
+                tokenInput.parentNode.appendChild(errorDiv);
+            }
+            errorDiv.textContent = '6자리 숫자를 입력해주세요.';
+            tokenInput.classList.add('is-invalid');
+        }
+    });
+});
+</script>
+{% endblock %}

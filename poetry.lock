@@ -325,6 +325,24 @@ docs = ["furo (>=2021.8.17b43,<2021.9.dev0)", "sphinx (>=3.5.0)", "sphinx-notfou
 testing = ["coverage[toml] (>=5.0a4)", "pytest (>=4.6.11)"]
 
 [[package]]
+name = "django-otp"
+version = "1.5.4"
+description = "A pluggable framework for adding two-factor authentication to Django using one-time passwords."
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "django_otp-1.5.4-py3-none-any.whl", hash = "sha256:783dea669ac0eaf5cd336f73839443584ee665af427a84175cca5a9d620366db"},
+    {file = "django_otp-1.5.4.tar.gz", hash = "sha256:0d9497ea4fb13fc04d50b49aa53dd1c740fe4bc5dde0ca27fb394f84e5da7bac"},
+]
+
+[package.dependencies]
+django = ">=3.2"
+
+[package.extras]
+qrcode = ["qrcode"]
+segno = ["segno"]
+
+[[package]]
 name = "django-parler"
 version = "2.3"
 description = "Simple Django model translations without nasty hacks, featuring nice admin integration."
@@ -662,6 +680,25 @@ files = [
 six = ">=1.5"
 
 [[package]]
+name = "qrcode"
+version = "8.0"
+description = "QR Code image generator"
+optional = false
+python-versions = "<4.0,>=3.9"
+files = [
+    {file = "qrcode-8.0-py3-none-any.whl", hash = "sha256:9fc05f03305ad27a709eb742cf3097fa19e6f6f93bb9e2f039c0979190f6f1b1"},
+    {file = "qrcode-8.0.tar.gz", hash = "sha256:025ce2b150f7fe4296d116ee9bad455a6643ab4f6e7dce541613a4758cbce347"},
+]
+
+[package.dependencies]
+colorama = {version = "*", markers = "sys_platform == \"win32\""}
+
+[package.extras]
+all = ["pillow (>=9.1.0)", "pypng"]
+pil = ["pillow (>=9.1.0)"]
+png = ["pypng"]
+
+[[package]]
 name = "redis"
 version = "5.2.1"
 description = "Python client for Redis database and key-value store"
@@ -772,4 +809,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "a7b5d44b877b59b99616638960e013c6cccc1623ec770f5cf4b35cb55884ff6d"
+content-hash = "b0d0e9ada9d2686e3fd704d6ba93ff8e692e1fe643f6aa5e89c35387f6c75a43"

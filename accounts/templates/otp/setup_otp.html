@@ -1,0 +1,67 @@
+{% extends "otp/base.html" %}
+
+{% block title %}OTP 설정 | Catcident Admin{% endblock %}
+
+{% block header %}OTP 인증 설정{% endblock %}
+
+{% block content %}
+    <p class="info-text">보안 강화를 위해 2단계 인증 방식을 선택해주세요.</p>
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="radio-option" data-option="totp">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="otp_type" value="totp" id="totp_option" checked>
+                <label class="form-check-label fw-bold" for="totp_option">
+                    인증 앱 (TOTP)
+                </label>
+            </div>
+            <p class="mt-2 mb-0 small text-muted">Google Authenticator나 Microsoft Authenticator와 같은 앱을 사용하여 인증 코드를 생성합니다.</p>
+        </div>
+        
+        <div class="radio-option" data-option="email">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="otp_type" value="email" id="email_option">
+                <label class="form-check-label fw-bold" for="email_option">
+                    이메일 (E-mail)
+                </label>
+            </div>
+            <p class="mt-2 mb-0 small text-muted">로그인할 때마다 등록된 이메일로 일회용 인증 코드를 받습니다.</p>
+        </div>
+        
+        <div class="d-grid mt-4">
+            <button type="submit" class="btn btn-primary">다음</button>
+        </div>
+    </form>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const radioOptions = document.querySelectorAll('.radio-option');
+    
+    radioOptions.forEach(option => {
+        const radio = option.querySelector('input[type="radio"]');
+        
+        // Initialize selected state
+        if (radio.checked) {
+            option.classList.add('selected');
+        }
+        
+        // Add click event to the whole div
+        option.addEventListener('click', function() {
+            // Unselect all options
+            radioOptions.forEach(opt => {
+                opt.classList.remove('selected');
+                opt.querySelector('input[type="radio"]').checked = false;
+            });
+            
+            // Select clicked option
+            radio.checked = true;
+            option.classList.add('selected');
+        });
+    });
+});
+</script>
+{% endblock %}

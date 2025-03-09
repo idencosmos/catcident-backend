@@ -1,0 +1,39 @@
+{% extends "otp/base.html" %}
+
+{% block title %}로그인 | Catcident Admin{% endblock %}
+
+{% block header %}로그인{% endblock %}
+
+{% block content %}
+    <p class="info-text">관리자 계정으로 로그인해주세요.</p>
+
+    <form method="post" novalidate>
+        {% csrf_token %}
+        
+        {% if form.non_field_errors %}
+        <div class="alert alert-danger" role="alert">
+            {% for error in form.non_field_errors %}
+                {{ error }}
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        <div class="mb-3">
+            <label for="{{ form.username.id_for_label }}" class="form-label">사용자 이름</label>
+            {{ form.username.errors }}
+            <input type="text" name="{{ form.username.name }}" class="form-control {% if form.username.errors %}is-invalid{% endif %}" 
+                   id="{{ form.username.id_for_label }}" placeholder="사용자 이름 입력" required>
+        </div>
+        
+        <div class="mb-4">
+            <label for="{{ form.password.id_for_label }}" class="form-label">비밀번호</label>
+            {{ form.password.errors }}
+            <input type="password" name="{{ form.password.name }}" class="form-control {% if form.password.errors %}is-invalid{% endif %}" 
+                   id="{{ form.password.id_for_label }}" placeholder="비밀번호 입력" required>
+        </div>
+        
+        <div class="d-grid">
+            <button type="submit" class="btn btn-primary">로그인</button>
+        </div>
+    </form>
+{% endblock %}

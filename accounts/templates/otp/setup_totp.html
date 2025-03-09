@@ -1,0 +1,57 @@
+{% extends "otp/base.html" %}
+
+{% block title %}TOTP 설정 | Catcident Admin{% endblock %}
+
+{% block header %}TOTP 인증 설정{% endblock %}
+
+{% block content %}
+    <div class="mb-4">
+        <p class="info-text">아래의 QR 코드를 인증 앱(Google Authenticator, Microsoft Authenticator 등)으로 스캔하세요.</p>
+        
+        <div class="qr-container">
+            <img src="data:image/png;base64,{{ qr_code }}" alt="TOTP QR Code" class="img-fluid">
+        </div>
+        
+        <div class="text-center mt-3">
+            <p class="small text-muted">QR 코드를 스캔한 후, 앱에 표시된 6자리 코드를 입력하세요.</p>
+        </div>
+    </div>
+    
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-4">
+            <label for="token" class="form-label">인증 코드</label>
+            <input type="text" name="token" id="token" class="form-control" placeholder="6자리 코드 입력" 
+                   required inputmode="numeric" pattern="[0-9]*" maxlength="6" autocomplete="off">
+            {% if error %}
+                <div class="error-message">{{ error }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="d-grid">
+            <button type="submit" class="btn btn-primary">인증 확인</button>
+        </div>
+    </form>
+    
+    <div class="mt-3 text-center">
+        <a href="{% url 'setup_otp' %}" class="text-decoration-none text-secondary small">
+            <i class="bi bi-arrow-left"></i> 다른 인증 방법 선택
+        </a>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tokenInput = document.getElementById('token');
+    
+    // Focus on the input field
+    tokenInput.focus();
+    
+    // Restrict input to numbers only
+    tokenInput.addEventListener('input', function() {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
+});
+</script>
+{% endblock %}
