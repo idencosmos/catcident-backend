@@ -15,8 +15,8 @@ __pycache__
 #####################
 venv
 .venv
-# poetry.lock를 무조건 빼고 싶다면 아래에 추가해도 됨. 
-# 단, Dockerfile에서 COPY로 필요한 경우는 제외 (!poetry.lock) 방식 등으로 조정 가능
+# Add poetry.lock below if you want to exclude it
+# If needed, use (!poetry.lock) to include it in Dockerfile COPY commands
 
 #####################
 # Django / Logs / DB
@@ -29,7 +29,7 @@ db.sqlite3
 #####################
 .env
 .env.*
-!README.md # (혹시 .env.example 정도만 예외 처리하고 싶다면 이런 패턴을 사용할 수도 있음)
+!README.md # Use this pattern to NOT exclude README.md 
 
 #####################
 # Git / CI
