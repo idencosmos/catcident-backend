@@ -1,19 +1,15 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 from .models import CustomUser
 
-
-class CustomUserAdmin(admin.ModelAdmin):
-    list_display = ("username", "email", "is_approved", "is_superuser")
-    list_filter = ("is_approved", "is_superuser")
-    fieldsets = (
-        (None, {"fields": ("username", "password")}),
-        ("Personal info", {"fields": ("first_name", "last_name", "email")}),
-        (
-            "Permissions",
-            {"fields": ("is_active", "is_staff", "is_superuser", "is_approved")},
-        ),
-        ("Important dates", {"fields": ("last_login", "date_joined")}),
+class CustomUserAdmin(UserAdmin):
+    list_display = ("username", "email", "is_approved", "is_staff")
+    list_filter = ("is_approved", "is_staff")
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('username', 'email', 'password1', 'password2', 'is_approved'),
+        }),
     )
-
 
 admin.site.register(CustomUser, CustomUserAdmin)
