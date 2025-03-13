@@ -13,6 +13,7 @@ services:
       - .env # 공통 환경 변수 파일
       - .env.dev # 개발 환경 변수 파일
     environment:
+      DJANGO_ENV: development
       DJANGO_SETTINGS_MODULE: config.settings.development # 개발용 settings 모듈 사용
     volumes:
       - ./:/app # 소스 코드 변경 사항 실시간 반영 (Live Reload)
@@ -51,6 +52,7 @@ services:
       - .env
       - .env.dev
     environment:
+      DJANGO_ENV: development
       DJANGO_SETTINGS_MODULE: config.settings.development
     volumes:
       - ./:/app
@@ -69,6 +71,7 @@ services:
       - .env
       - .env.dev
     environment:
+      DJANGO_ENV: development
       DJANGO_SETTINGS_MODULE: config.settings.development
     volumes:
       - ./:/app

@@ -4,23 +4,29 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        DJANGO_SETTINGS_MODULE: config.settings.production  # Default to production settings.
+        DJANGO_SETTINGS_MODULE: config.settings.production
     command: >
       sh -c "
-      python manage.py migrate &&
-      python manage.py loaddata fixtures/initial_data.json &&
-      python manage.py runserver 0.0.0.0:8000
+      python manage.py migrate --no-input &&
+      python manage.py collectstatic --no-input &&
+      gunicorn config.wsgi:application --bind 0.0.0.0:8000
       "
     env_file:
       - .env
       - .env.prod
+    environment:
+      DJANGO_ENV: production
+      DJANGO_SETTINGS_MODULE: config.settings.production
     volumes:
-      - ./media:/app/media  # 사용자 업로드 파일 저장소.
-      - ./staticfiles:/app/staticfiles  # 정적 파일 저장소.
+      - ./media:/app/media
+      - ./staticfiles:/app/staticfiles
     depends_on:
       - db
+      - redis
     networks:
       - internal
+      - caddy
+    restart: unless-stopped
 
   db:
     image: postgres:15-alpine
@@ -32,10 +38,64 @@ services:
       - db_data:/var/lib/postgresql/data/
     networks:
       - internal
+    restart: unless-stopped
+
+  redis:
+    image: redis:alpine
+    command: redis-server --requirepass ${REDIS_PASSWORD}
+    volumes:
+      - redis_data:/data
+    networks:
+      - internal
+    restart: unless-stopped
+
+  celery:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        DJANGO_SETTINGS_MODULE: config.settings.production
+    command: celery -A config worker -l info
+    env_file:
+      - .env
+      - .env.prod
+    environment:
+      DJANGO_ENV: production
+      DJANGO_SETTINGS_MODULE: config.settings.production
+    volumes:
+      - ./media:/app/media
+    depends_on:
+      - api
+      - redis
+    networks:
+      - internal
+    restart: unless-stopped
+
+  celery-beat:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        DJANGO_SETTINGS_MODULE: config.settings.production
+    command: celery -A config beat -l info
+    env_file:
+      - .env
+      - .env.prod
+    environment:
+      DJANGO_ENV: production
+      DJANGO_SETTINGS_MODULE: config.settings.production
+    depends_on:
+      - redis
+    networks:
+      - internal
+    restart: unless-stopped
 
 volumes:
   db_data:
+  redis_data:
 
 networks:
   internal:
     driver: bridge
+  caddy:
+    external: true

@@ -1,20 +1,14 @@
 from .base import *
 
-DEBUG = False
+# -------------------------
+# 로깅 설정
+# -------------------------
+LOGGING["handlers"]["console"] = {
+    "class": "logging.StreamHandler",
+    "formatter": "verbose",
+    "level": "INFO",
+}
+LOGGING["loggers"]["uploads"]["handlers"] = ["console", "file"]
 
-SECURE_SSL_REDIRECT = True
-SECURE_HSTS_SECONDS = 31536000  # 1년
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_HSTS_PRELOAD = True
-
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
-
-SECURE_CONTENT_TYPE_NOSNIFF = True
-SECURE_BROWSER_XSS_FILTER = False
-
-# 프로덕션 환경만의 추가 설정
-SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-SECURE_SSL_REDIRECT = True
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
+# 프로덕션 환경 추가 설정이 필요한 경우 여기에 작성합니다.
+# 기본 설정은 대부분 .env 및 .env.prod 파일에서 로드됩니다.

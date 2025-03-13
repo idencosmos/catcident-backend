@@ -13,18 +13,27 @@ from pathlib import Path
 # =================================================
 # 환경변수 초기화
 env = environ.Env(DEBUG=(bool, False))
-environ.Env.read_env()  # .env 파일 읽기
 
 # 프로젝트 기본 경로 설정
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
+
+# 기본 .env 파일 로드 (공통 설정)
+environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
+
+# 환경별 .env 파일 로드 (개발 또는 프로덕션)
+DJANGO_ENV = os.environ.get("DJANGO_ENV", "development")
+if DJANGO_ENV == "production":
+    environ.Env.read_env(os.path.join(BASE_DIR, ".env.prod"))
+else:
+    environ.Env.read_env(os.path.join(BASE_DIR, ".env.dev"))
 
 # 로그 디렉토리 생성
 LOG_DIR = BASE_DIR / "logs"
 os.makedirs(LOG_DIR, exist_ok=True)
 
 # 코어 설정
-SECRET_KEY = env("SECRET_KEY", default="unsafe-secret-key")
-DEBUG = env("DEBUG", default=False)
+SECRET_KEY = env("SECRET_KEY")
+DEBUG = env("DEBUG")
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[])
 CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=[])
 
@@ -39,12 +48,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    
     # 보안 관련 앱
     "django_otp",
     "django_otp.plugins.otp_totp",
     "django_otp.plugins.otp_email",
-    
     # 서드파티 앱
     "rest_framework",
     "corsheaders",
@@ -52,7 +59,6 @@ INSTALLED_APPS = [
     "parler",
     "storages",
     "django_celery_beat",
-    
     # 프로젝트 앱
     "accounts",
     "homepage",
@@ -136,8 +142,20 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # 인증 및 세션 설정
-SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+SESSION_ENGINE = "django.contrib.sessions.backends.db"
 SESSION_COOKIE_AGE = 86400  # 24시간
+SESSION_COOKIE_SECURE = env.bool("SESSION_COOKIE_SECURE", default=False)
+CSRF_COOKIE_SECURE = env.bool("CSRF_COOKIE_SECURE", default=False)
+
+# SSL 보안 설정
+SECURE_SSL_REDIRECT = env.bool("SECURE_SSL_REDIRECT", default=False)
+SECURE_HSTS_SECONDS = env.int("SECURE_HSTS_SECONDS", default=0)
+SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool(
+    "SECURE_HSTS_INCLUDE_SUBDOMAINS", default=False
+)
+SECURE_HSTS_PRELOAD = env.bool("SECURE_HSTS_PRELOAD", default=False)
+SECURE_CONTENT_TYPE_NOSNIFF = env.bool("SECURE_CONTENT_TYPE_NOSNIFF", default=False)
+SECURE_BROWSER_XSS_FILTER = env.bool("SECURE_BROWSER_XSS_FILTER", default=False)
 
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
@@ -148,14 +166,14 @@ AUTH_USER_MODEL = "accounts.CustomUser"
 
 # OTP 인증 설정
 OTP_TOTP_ISSUER = "Catcident API"
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = env('EMAIL_HOST')
-EMAIL_PORT = env('EMAIL_PORT')
-EMAIL_USE_TLS = env('EMAIL_USE_TLS')
-EMAIL_HOST_USER = env('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
-OTP_EMAIL_SUBJECT = 'Your OTP Token'
-OTP_EMAIL_BODY_TEMPLATE = 'Your one-time password is: {{ token }}'
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = env("EMAIL_HOST")
+EMAIL_PORT = env("EMAIL_PORT")
+EMAIL_USE_TLS = env("EMAIL_USE_TLS")
+EMAIL_HOST_USER = env("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
+OTP_EMAIL_SUBJECT = "Your OTP Token"
+OTP_EMAIL_BODY_TEMPLATE = "Your one-time password is: {{ token }}"
 
 # =================================================
 # 국제화 설정
@@ -266,8 +284,8 @@ customColorPalette = [
 CKEDITOR_5_CUSTOM_CSS = "css/ckeditor_custom.css"
 CKEDITOR_5_FILE_UPLOAD_PERMISSION = "staff"
 CKEDITOR_5_ALLOW_ALL_FILE_TYPES = True
-CKEDITOR_5_UPLOAD_FILE_TYPES = ["jpeg", "jpg", "gif", "png", "pdf"]
-CKEDITOR_5_MAX_FILE_SIZE = 10  # MB
+CKEDITOR_5_UPLOAD_FILE_TYPES = ["jpeg", "jpg", "gif", "png", "pdf", "mp4", "mov"]
+CKEDITOR_5_MAX_FILE_SIZE = 1024  # MB
 
 # 에디터 구성
 CKEDITOR_5_CONFIGS = {
@@ -424,3 +442,8 @@ LOGGING = {
         },
     },
 }
+
+# 로깅 레벨 설정
+LOGGING_LEVEL = env("LOGGING_LEVEL", default="INFO")
+LOGGING["handlers"]["file"]["level"] = LOGGING_LEVEL
+LOGGING["loggers"]["uploads"]["level"] = LOGGING_LEVEL
