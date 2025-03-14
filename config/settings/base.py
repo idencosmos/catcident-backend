@@ -38,6 +38,14 @@ ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[])
 CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=[])
 
 # =================================================
+# Next.js 재검증 설정
+# =================================================
+# Next.js 재검증 API URL
+NEXTJS_REVALIDATE_URL = env("NEXTJS_REVALIDATE_URL", default=None)
+# Next.js 재검증 API 토큰 (보안을 위해)
+NEXTJS_REVALIDATE_TOKEN = env("NEXTJS_REVALIDATE_TOKEN", default=None)
+
+# =================================================
 # 애플리케이션 정의
 # =================================================
 INSTALLED_APPS = [
@@ -440,6 +448,11 @@ LOGGING = {
             "level": "INFO",
             "propagate": False,
         },
+        "homepage": {
+            "handlers": ["file"],
+            "level": "INFO",
+            "propagate": False,
+        },
     },
 }
 
@@ -447,3 +460,4 @@ LOGGING = {
 LOGGING_LEVEL = env("LOGGING_LEVEL", default="INFO")
 LOGGING["handlers"]["file"]["level"] = LOGGING_LEVEL
 LOGGING["loggers"]["uploads"]["level"] = LOGGING_LEVEL
+LOGGING["loggers"]["homepage"]["level"] = LOGGING_LEVEL
