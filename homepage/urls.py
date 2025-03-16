@@ -37,7 +37,7 @@ urlpatterns = [
     # About
     path('about/creators/', CreatorListAPIView.as_view(), name='creator-list'),
     path('about/creators/<slug:slug>/', CreatorDetailAPIView.as_view(), name='creator-detail'),
-    path('about/book-categories/', BookCategoryListAPIView.as_view(), name='bookcategory-list'),
+    path('about/books/categories/', BookCategoryListAPIView.as_view(), name='bookcategory-list'),
     path('about/books/', BookListAPIView.as_view(), name='book-list'),
     path('about/books/<int:pk>/', BookDetailAPIView.as_view(), name='book-detail'),
     path('about/characters/', CharacterListAPIView.as_view(), name='character-list'),

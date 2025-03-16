@@ -24,6 +24,7 @@ from .models.about_models import (
     HistoryEvent,
     LicensePage,
 )
+from .models.home_models import HomeSection, HeroSlide
 
 logger = logging.getLogger(__name__)
 
@@ -184,3 +185,17 @@ def handle_history_event_change(sender, instance, **kwargs):
 def handle_license_page_change(sender, instance, **kwargs):
     revalidate_nextjs_tag("about")
     revalidate_nextjs_tag("license")
+
+
+# Home models signals
+@receiver(post_save, sender=HomeSection)
+@receiver(post_delete, sender=HomeSection)
+def handle_home_section_change(sender, instance, **kwargs):
+    revalidate_nextjs_tag("home")
+    revalidate_nextjs_tag("homesections")
+
+@receiver(post_save, sender=HeroSlide)
+@receiver(post_delete, sender=HeroSlide)
+def handle_hero_slide_change(sender, instance, **kwargs):
+    revalidate_nextjs_tag("home")
+    revalidate_nextjs_tag("heroslides")
