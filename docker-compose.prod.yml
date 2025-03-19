@@ -37,11 +37,11 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "1"
-          memory: 1G
+          cpus: "1.5"
+          memory: 1.5G
         reservations:
-          cpus: "0.25"
-          memory: 512M
+          cpus: "0.5"
+          memory: 768M
     logging:
       driver: "json-file"
       options:
@@ -72,7 +72,7 @@ services:
       resources:
         limits:
           cpus: "1"
-          memory: 1G
+          memory: 1.5G
     logging:
       driver: "json-file"
       options:
@@ -178,8 +178,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "0.5"
-          memory: 512M
+          cpus: "0.25"
+          memory: 384M
     logging:
       driver: "json-file"
       options:
@@ -214,6 +214,11 @@ services:
     restart: unless-stopped
     security_opt:
       - no-new-privileges:true
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 512M
     logging:
       driver: "json-file"
       options:
