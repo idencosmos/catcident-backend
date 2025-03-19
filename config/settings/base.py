@@ -262,6 +262,7 @@ CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
 CELERY_RESULT_SERIALIZER = "json"
 CELERY_TIMEZONE = "Asia/Seoul"
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True  # 이 줄 추가
 
 # 주기적 작업
 CELERY_BEAT_SCHEDULE = {
@@ -270,7 +271,7 @@ CELERY_BEAT_SCHEDULE = {
         "schedule": 86400.0,  # 하루에 한 번 실행
     },
     "check-system-health-every-hour": {
-        "task": "uploads.tasks.check_system_health",
+        "task": "config.tasks.check_system_health",
         "schedule": 3600.0,  # 1시간마다 실행
     },
 }
