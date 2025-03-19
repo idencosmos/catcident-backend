@@ -26,6 +26,7 @@ urlpatterns = [
         name="ckeditor5-upload",
     ),
     path("ckeditor5/", include("django_ckeditor_5.urls")),
+    path("healthcheck/", include("health_check.urls")),
 ]
 
 if settings.DEBUG:

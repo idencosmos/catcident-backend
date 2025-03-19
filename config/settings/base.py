@@ -67,6 +67,13 @@ INSTALLED_APPS = [
     "parler",
     "storages",
     "django_celery_beat",
+    # 헬스체크 앱
+    "health_check",
+    "health_check.db",
+    "health_check.cache",
+    "health_check.storage",
+    "health_check.contrib.migrations",
+    "health_check.contrib.celery",
     # 프로젝트 앱
     "accounts",
     "homepage",
@@ -261,6 +268,10 @@ CELERY_BEAT_SCHEDULE = {
     "clean-unused-media-every-day": {
         "task": "uploads.tasks.clean_unused_media_task",
         "schedule": 86400.0,  # 하루에 한 번 실행
+    },
+    "check-system-health-every-hour": {
+        "task": "uploads.tasks.check_system_health",
+        "schedule": 3600.0,  # 1시간마다 실행
     },
 }
 
