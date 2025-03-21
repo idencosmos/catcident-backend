@@ -29,7 +29,8 @@ else:
 
 # 로그 디렉토리 생성
 LOG_DIR = BASE_DIR / "logs"
-os.makedirs(LOG_DIR, exist_ok=True)
+if DJANGO_ENV != "production":
+    os.makedirs(LOG_DIR, exist_ok=True)
 
 # 코어 설정
 SECRET_KEY = env("SECRET_KEY")
