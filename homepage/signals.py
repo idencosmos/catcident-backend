@@ -25,6 +25,7 @@ from .models.about_models import (
     LicensePage,
 )
 from .models.home_models import HomeSection, HeroSlide
+from .models.gallery_models import GalleryCategory, GalleryItem
 
 logger = logging.getLogger(__name__)
 
@@ -194,8 +195,26 @@ def handle_home_section_change(sender, instance, **kwargs):
     revalidate_nextjs_tag("home")
     revalidate_nextjs_tag("homesections")
 
+
 @receiver(post_save, sender=HeroSlide)
 @receiver(post_delete, sender=HeroSlide)
 def handle_hero_slide_change(sender, instance, **kwargs):
     revalidate_nextjs_tag("home")
     revalidate_nextjs_tag("heroslides")
+
+
+# Gallery models signals
+@receiver(post_save, sender=GalleryCategory)
+@receiver(post_delete, sender=GalleryCategory)
+def handle_gallery_category_change(sender, instance, **kwargs):
+    revalidate_nextjs_tag("gallery")
+    revalidate_nextjs_tag("gallerycategories")
+
+
+@receiver(post_save, sender=GalleryItem)
+@receiver(post_delete, sender=GalleryItem)
+def handle_gallery_item_change(sender, instance, **kwargs):
+    revalidate_nextjs_tag("gallery")
+    revalidate_nextjs_tag("galleryitems")
+    # 개별 갤러리 아이템 태그 재검증
+    revalidate_nextjs_tag(f"gallery-{instance.id}")

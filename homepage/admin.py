@@ -31,6 +31,9 @@ from .models import (
     # Events 모델
     EventCategory,
     Event,
+    # Gallery 모델
+    GalleryCategory,
+    GalleryItem,
 )
 
 
@@ -46,7 +49,7 @@ def revalidate_all_tags(modeladmin, request, queryset):
         "copyright",
     ]
     # 섹션별 태그
-    section_tags = ["home", "about", "news", "events"]
+    section_tags = ["home", "about", "news", "events", "gallery"]
     # 컨텐츠 태그
     content_tags = [
         "homesections",
@@ -59,6 +62,8 @@ def revalidate_all_tags(modeladmin, request, queryset):
         "characters",
         "history",
         "license",
+        "gallerycategories",
+        "galleryitems",
     ]
 
     # 모든 태그 재검증
@@ -279,6 +284,28 @@ class EventCategoryAdmin(TranslatableAdmin):
 @admin.register(Event)
 class EventAdmin(TranslatableAdmin):
     list_display = ("id", "title_display", "category", "date", "created_at")
+
+    def title_display(self, obj):
+        return obj.safe_translation_getter("title", any_language=True)
+
+
+# =================== Gallery Admin ===================
+
+
+@admin.register(GalleryCategory)
+class GalleryCategoryAdmin(TranslatableAdmin):
+    list_display = ("id", "slug", "name_display")
+
+    def name_display(self, obj):
+        return obj.safe_translation_getter("name", any_language=True)
+
+
+@admin.register(GalleryItem)
+class GalleryItemAdmin(TranslatableAdmin):
+    list_display = ("id", "title_display", "category", "year", "is_featured", "order")
+    list_filter = ("category", "year", "is_featured")
+    list_editable = ("is_featured", "order")
+    search_fields = ("translations__title", "translations__short_description")
 
     def title_display(self, obj):
         return obj.safe_translation_getter("title", any_language=True)

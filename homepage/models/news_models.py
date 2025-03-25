@@ -35,7 +35,7 @@ class News(TranslatableModel):
     )
     date = models.DateField(verbose_name="게시 날짜")
     created_at = models.DateTimeField(auto_now_add=True)
-
+    updated_at = models.DateTimeField(auto_now=True)
     translations = TranslatedFields(
         title=models.CharField(max_length=200, verbose_name="제목"),
         content=CKEditor5Field(

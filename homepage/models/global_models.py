@@ -10,8 +10,8 @@ class SiteTitle(TranslatableModel):
         return self.safe_translation_getter("title", any_language=True) or "SiteTitle"
 
     class Meta:
-        verbose_name = "G01. Site Title"
-        verbose_name_plural = "G01. Site Titles"
+        verbose_name = "_01. Site Title"
+        verbose_name_plural = "_01. Site Titles"
 
 
 class NavigationGroup(TranslatableModel):
@@ -26,8 +26,8 @@ class NavigationGroup(TranslatableModel):
         )
 
     class Meta:
-        verbose_name = "G02. Navigation Group"
-        verbose_name_plural = "G02. Navigation Groups"
+        verbose_name = "_02. Navigation Group"
+        verbose_name_plural = "_02. Navigation Groups"
 
 
 class NavigationSubMenu(TranslatableModel):
@@ -45,8 +45,8 @@ class NavigationSubMenu(TranslatableModel):
         )
 
     class Meta:
-        verbose_name = "G03. Navigation SubMenu"
-        verbose_name_plural = "G03. Navigation SubMenus"
+        verbose_name = "_03. Navigation SubMenu"
+        verbose_name_plural = "_03. Navigation SubMenus"
 
 
 class FooterSection(TranslatableModel):
@@ -59,8 +59,8 @@ class FooterSection(TranslatableModel):
         )
 
     class Meta:
-        verbose_name = "G04. Footer Section"
-        verbose_name_plural = "G04. Footer Sections"
+        verbose_name = "_04. Footer Section"
+        verbose_name_plural = "_04. Footer Sections"
 
 
 class FooterSubMenu(TranslatableModel):
@@ -78,8 +78,8 @@ class FooterSubMenu(TranslatableModel):
         )
 
     class Meta:
-        verbose_name = "G05. Footer SubMenu"
-        verbose_name_plural = "G05. Footer SubMenus"
+        verbose_name = "_05. Footer SubMenu"
+        verbose_name_plural = "_05. Footer SubMenus"
 
 
 class FamilySite(TranslatableModel):
@@ -94,8 +94,8 @@ class FamilySite(TranslatableModel):
         )
 
     class Meta:
-        verbose_name = "G06. Family Site"
-        verbose_name_plural = "G06. Family Sites"
+        verbose_name = "_06. Family Site"
+        verbose_name_plural = "_06. Family Sites"
 
 
 class Copyright(models.Model):
@@ -105,5 +105,5 @@ class Copyright(models.Model):
         return "Copyright"
 
     class Meta:
-        verbose_name = "G07. Copyright"
-        verbose_name_plural = "G07. Copyright"
+        verbose_name = "_07. Copyright"
+        verbose_name_plural = "_07. Copyright"

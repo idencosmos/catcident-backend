@@ -21,6 +21,9 @@ from homepage.views.news_views import (
 from homepage.views.event_views import (
     EventCategoryListAPIView, EventListAPIView, EventDetailAPIView
 )
+from homepage.views.gallery_views import (
+    GalleryCategoryListAPIView, GalleryItemListAPIView, GalleryItemDetailAPIView
+)
 
 urlpatterns = [
     # Global
@@ -59,4 +62,9 @@ urlpatterns = [
     path('events/categories/', EventCategoryListAPIView.as_view(), name='event-category-list'),
     path('events/', EventListAPIView.as_view(), name='event-list'),
     path('events/<int:id>/', EventDetailAPIView.as_view(), name='event-detail'),
+    
+    # Gallery
+    path('gallery/categories/', GalleryCategoryListAPIView.as_view(), name='gallery-category-list'),
+    path('gallery/', GalleryItemListAPIView.as_view(), name='gallery-list'),
+    path('gallery/<int:id>/', GalleryItemDetailAPIView.as_view(), name='gallery-detail'),
 ]

@@ -20,3 +20,4 @@ from .about_models import (
 from .resource_models import ResourceCategory, Resource
 from .news_models import NewsCategory, News
 from .event_models import EventCategory, Event
+from .gallery_models import GalleryCategory, GalleryItem

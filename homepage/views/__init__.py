@@ -4,3 +4,4 @@ from .about_views import *
 from .resource_views import *
 from .news_views import *
 from .event_views import *
+from .gallery_views import *
