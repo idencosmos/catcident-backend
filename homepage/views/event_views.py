@@ -1,8 +1,8 @@
-# homepage/views/events_views.py
+# homepage/views/event_views.py
 from rest_framework import generics
 from rest_framework.permissions import AllowAny
-from homepage.models.events_models import EventCategory, Event
-from homepage.serializers.events_serializers import EventCategorySerializer, EventSerializer
+from homepage.models.event_models import EventCategory, Event
+from homepage.serializers.event_serializers import EventCategorySerializer, EventSerializer
 
 class EventCategoryListAPIView(generics.ListAPIView):
     queryset = EventCategory.objects.all()

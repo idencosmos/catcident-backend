@@ -621,7 +621,7 @@
         "pk": 1,
         "fields": {
             "parent_group": 1,
-            "href": "/about/creator"
+            "href": "/about/creators"
         }
     },
     {
@@ -978,7 +978,7 @@
         "pk": 1,
         "fields": {
             "footer_section": 1,
-            "href": "/about/creator"
+            "href": "/about/creators"
         }
     },
     {

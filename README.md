@@ -66,10 +66,10 @@ CatCident Backend는 [고양이의 만행] 사이트를 위한 Django 기반 콘
 - `HistoryEvent`: 연혁 정보
 - `LicensePage`: 라이선스 페이지
 
-### Resources Models
+### Resource Models
 - `ResourceCategory`, `Resource`: 리소스 자료
 
-### News/Events Models
+### News/Event Models
 - `NewsCategory`, `News`: 뉴스 카테고리 및 뉴스
 - `EventCategory`, `Event`: 이벤트 카테고리 및 이벤트
 
@@ -213,9 +213,9 @@ docker compose run api python manage.py collectstatic --no-input
 - `/api/homepage/global/` - 글로벌 설정(사이트 제목, 네비게이션, 푸터 등)
 - `/api/homepage/home/` - 홈페이지 섹션 및 슬라이드
 - `/api/homepage/about/` - 작가, 도서, 캐릭터, 연혁 등
-- `/api/homepage/resources/` - 리소스 자료
+- `/api/homepage/resource/` - 리소스 자료
 - `/api/homepage/news/` - 뉴스 콘텐츠
-- `/api/homepage/events/` - 이벤트 정보
+- `/api/homepage/event/` - 이벤트 정보
 - `/api/uploads/` - 미디어 파일 업로드 API
 
 ## 🔧 유지보수

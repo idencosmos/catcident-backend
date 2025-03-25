@@ -1,28 +1,27 @@
-# homepage/serializers/resources_serializers.py
+# homepage/serializers/event_serializers.py
 from rest_framework import serializers
-from homepage.models.resources_models import ResourceCategory, Resource
+from homepage.models.event_models import EventCategory, Event
 from uploads.serializers import MediaSerializer
 
-class ResourceCategorySerializer(serializers.ModelSerializer):
+class EventCategorySerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField()
 
     class Meta:
-        model = ResourceCategory
+        model = EventCategory
         fields = ["id", "slug", "name"]
 
     def get_name(self, obj):
         return obj.safe_translation_getter("name", any_language=True)
 
-class ResourceSerializer(serializers.ModelSerializer):
+class EventSerializer(serializers.ModelSerializer):
     title = serializers.SerializerMethodField()
     description = serializers.SerializerMethodField()
-    category = ResourceCategorySerializer(read_only=True)
+    category = EventCategorySerializer(read_only=True)
     main_image = MediaSerializer(read_only=True)
-    file = MediaSerializer(read_only=True)
 
     class Meta:
-        model = Resource
-        fields = ["id", "title", "description", "category", "main_image", "file", "created_at"]
+        model = Event
+        fields = ["id", "title", "description", "category", "main_image", "date", "created_at"]
 
     def get_title(self, obj):
         return obj.safe_translation_getter("title", any_language=True)

@@ -12,13 +12,13 @@ from homepage.views.about_views import (
     CharacterListAPIView, CharacterDetailAPIView,
     HistoryEventListAPIView, LicensePageDetailAPIView
 )
-from homepage.views.resources_views import (
+from homepage.views.resource_views import (
     ResourceCategoryListAPIView, ResourceListAPIView, ResourceDetailAPIView
 )
 from homepage.views.news_views import (
     NewsCategoryListAPIView, NewsListAPIView, NewsDetailAPIView
 )
-from homepage.views.events_views import (
+from homepage.views.event_views import (
     EventCategoryListAPIView, EventListAPIView, EventDetailAPIView
 )
 

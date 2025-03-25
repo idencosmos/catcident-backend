@@ -17,6 +17,6 @@ from .about_models import (
     HistoryEvent,
     LicensePage,
 )
-from .resources_models import ResourceCategory, Resource
+from .resource_models import ResourceCategory, Resource
 from .news_models import NewsCategory, News
-from .events_models import EventCategory, Event
+from .event_models import EventCategory, Event

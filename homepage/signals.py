@@ -15,7 +15,7 @@ from .models.global_models import (
     Copyright,
 )
 from .models.news_models import NewsCategory, News
-from .models.events_models import EventCategory, Event
+from .models.event_models import EventCategory, Event
 from .models.about_models import (
     Creator,
     BookCategory,

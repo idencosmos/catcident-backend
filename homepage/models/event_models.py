@@ -1,4 +1,4 @@
-# homepage/models/events_models.py
+# homepage/models/event_models.py
 from django.db import models
 from django_ckeditor_5.fields import CKEditor5Field
 from parler.models import TranslatableModel, TranslatedFields

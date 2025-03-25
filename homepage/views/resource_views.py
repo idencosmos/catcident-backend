@@ -1,8 +1,8 @@
-# homepage/views/resources_views.py
+# homepage/views/resource_views.py
 from rest_framework import generics
 from rest_framework.permissions import AllowAny
-from homepage.models.resources_models import ResourceCategory, Resource
-from homepage.serializers.resources_serializers import ResourceCategorySerializer, ResourceSerializer
+from homepage.models.resource_models import ResourceCategory, Resource
+from homepage.serializers.resource_serializers import ResourceCategorySerializer, ResourceSerializer
 
 class ResourceCategoryListAPIView(generics.ListAPIView):
     queryset = ResourceCategory.objects.all()
