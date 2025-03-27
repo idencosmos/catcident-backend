@@ -16,6 +16,7 @@ class SiteTitle(TranslatableModel):
 
 class NavigationGroup(TranslatableModel):
     highlighted = models.BooleanField(default=False)
+    order = models.PositiveIntegerField(default=0)
 
     translations = TranslatedFields(group_label=models.CharField(max_length=100))
 
@@ -28,6 +29,7 @@ class NavigationGroup(TranslatableModel):
     class Meta:
         verbose_name = "_02. Navigation Group"
         verbose_name_plural = "_02. Navigation Groups"
+        ordering = ["order"]
 
 
 class NavigationSubMenu(TranslatableModel):
@@ -35,6 +37,7 @@ class NavigationSubMenu(TranslatableModel):
         NavigationGroup, related_name="sub_menus", on_delete=models.CASCADE
     )
     href = models.CharField(max_length=200)
+    order = models.PositiveIntegerField(default=0)
 
     translations = TranslatedFields(label=models.CharField(max_length=100))
 
@@ -47,10 +50,12 @@ class NavigationSubMenu(TranslatableModel):
     class Meta:
         verbose_name = "_03. Navigation SubMenu"
         verbose_name_plural = "_03. Navigation SubMenus"
+        ordering = ["order"]
 
 
 class FooterSection(TranslatableModel):
     translations = TranslatedFields(label=models.CharField(max_length=100))
+    order = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return (
@@ -61,6 +66,7 @@ class FooterSection(TranslatableModel):
     class Meta:
         verbose_name = "_04. Footer Section"
         verbose_name_plural = "_04. Footer Sections"
+        ordering = ["order"]
 
 
 class FooterSubMenu(TranslatableModel):
@@ -68,6 +74,7 @@ class FooterSubMenu(TranslatableModel):
         FooterSection, related_name="sub_menus", on_delete=models.CASCADE
     )
     href = models.CharField(max_length=200)
+    order = models.PositiveIntegerField(default=0)
 
     translations = TranslatedFields(label=models.CharField(max_length=100))
 
@@ -80,10 +87,12 @@ class FooterSubMenu(TranslatableModel):
     class Meta:
         verbose_name = "_05. Footer SubMenu"
         verbose_name_plural = "_05. Footer SubMenus"
+        ordering = ["order"]
 
 
 class FamilySite(TranslatableModel):
     href = models.CharField(max_length=200)
+    order = models.PositiveIntegerField(default=0)
 
     translations = TranslatedFields(label=models.CharField(max_length=100))
 
@@ -96,6 +105,7 @@ class FamilySite(TranslatableModel):
     class Meta:
         verbose_name = "_06. Family Site"
         verbose_name_plural = "_06. Family Sites"
+        ordering = ["order"]
 
 
 class Copyright(models.Model):

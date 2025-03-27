@@ -89,7 +89,8 @@ class SiteTitleAdmin(TranslatableAdmin):
 
 @admin.register(NavigationGroup)
 class NavigationGroupAdmin(TranslatableAdmin):
-    list_display = ("id", "group_label_display", "highlighted")
+    list_display = ("id", "group_label_display", "highlighted", "order")
+    list_editable = ("highlighted", "order")
 
     def group_label_display(self, obj):
         return obj.safe_translation_getter("group_label", any_language=True)
@@ -97,7 +98,8 @@ class NavigationGroupAdmin(TranslatableAdmin):
 
 @admin.register(NavigationSubMenu)
 class NavigationSubMenuAdmin(TranslatableAdmin):
-    list_display = ("id", "parent_group", "label_display", "href")
+    list_display = ("id", "parent_group", "label_display", "href", "order")
+    list_editable = ("order",)
 
     def label_display(self, obj):
         return obj.safe_translation_getter("label", any_language=True)
@@ -105,7 +107,8 @@ class NavigationSubMenuAdmin(TranslatableAdmin):
 
 @admin.register(FooterSection)
 class FooterSectionAdmin(TranslatableAdmin):
-    list_display = ("id", "label_display")
+    list_display = ("id", "label_display", "order")
+    list_editable = ("order",)
 
     def label_display(self, obj):
         return obj.safe_translation_getter("label", any_language=True)
@@ -113,7 +116,8 @@ class FooterSectionAdmin(TranslatableAdmin):
 
 @admin.register(FooterSubMenu)
 class FooterSubMenuAdmin(TranslatableAdmin):
-    list_display = ("id", "footer_section", "label_display", "href")
+    list_display = ("id", "footer_section", "label_display", "href", "order")
+    list_editable = ("order",)
 
     def label_display(self, obj):
         return obj.safe_translation_getter("label", any_language=True)
@@ -121,7 +125,8 @@ class FooterSubMenuAdmin(TranslatableAdmin):
 
 @admin.register(FamilySite)
 class FamilySiteAdmin(TranslatableAdmin):
-    list_display = ("id", "label_display", "href")
+    list_display = ("id", "label_display", "href", "order")
+    list_editable = ("order",)
 
     def label_display(self, obj):
         return obj.safe_translation_getter("label", any_language=True)
