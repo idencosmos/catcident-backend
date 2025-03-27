@@ -4,14 +4,22 @@ from rest_framework import generics
 from rest_framework.permissions import AllowAny
 
 from homepage.models.about_models import (
-    Creator, BookCategory, Book,
-    Character, HistoryEvent, LicensePage
+    Creator,
+    BookCategory,
+    Book,
+    Character,
+    HistoryEvent,
+    LicensePage,
 )
 from homepage.serializers.about_serializers import (
-    CreatorSerializer, BookCategorySerializer,
-    BookSerializer, CharacterSerializer,
-    HistoryEventSerializer, LicensePageSerializer
+    CreatorSerializer,
+    BookCategorySerializer,
+    BookSerializer,
+    CharacterSerializer,
+    HistoryEventSerializer,
+    LicensePageSerializer,
 )
+
 
 # 1) Creator
 class CreatorListAPIView(generics.ListAPIView):
@@ -71,10 +79,8 @@ class HistoryEventListAPIView(generics.ListAPIView):
 
 # 6) LicensePage
 class LicensePageDetailAPIView(generics.RetrieveAPIView):
-    queryset = LicensePage.objects.all()
     serializer_class = LicensePageSerializer
     permission_classes = [AllowAny]
 
     def get_object(self):
-        # 단일 레코드만 존재한다고 가정하고 첫 번째 객체 반환
-        return self.queryset.first()
+        return LicensePage

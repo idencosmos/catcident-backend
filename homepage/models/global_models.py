@@ -6,6 +6,15 @@ from parler.models import TranslatableModel, TranslatedFields
 class SiteTitle(TranslatableModel):
     translations = TranslatedFields(title=models.CharField(max_length=200))
 
+    def save(self, *args, **kwargs):
+        self.pk = 1
+        super().save(*args, **kwargs)
+
+    @classmethod
+    def load(cls):
+        obj, created = cls.objects.get_or_create(pk=1)
+        return obj
+
     def __str__(self):
         return self.safe_translation_getter("title", any_language=True) or "SiteTitle"
 
@@ -48,8 +57,8 @@ class NavigationSubMenu(TranslatableModel):
         )
 
     class Meta:
-        verbose_name = "_03. Navigation SubMenu"
-        verbose_name_plural = "_03. Navigation SubMenus"
+        verbose_name = "Navigation SubMenu"
+        verbose_name_plural = "Navigation SubMenus"
         ordering = ["order"]
 
 
@@ -64,8 +73,8 @@ class FooterSection(TranslatableModel):
         )
 
     class Meta:
-        verbose_name = "_04. Footer Section"
-        verbose_name_plural = "_04. Footer Sections"
+        verbose_name = "_03. Footer Section"
+        verbose_name_plural = "_03. Footer Sections"
         ordering = ["order"]
 
 
@@ -85,8 +94,8 @@ class FooterSubMenu(TranslatableModel):
         )
 
     class Meta:
-        verbose_name = "_05. Footer SubMenu"
-        verbose_name_plural = "_05. Footer SubMenus"
+        verbose_name = "Footer SubMenu"
+        verbose_name_plural = "Footer SubMenus"
         ordering = ["order"]
 
 
@@ -103,17 +112,26 @@ class FamilySite(TranslatableModel):
         )
 
     class Meta:
-        verbose_name = "_06. Family Site"
-        verbose_name_plural = "_06. Family Sites"
+        verbose_name = "_04. Family Site"
+        verbose_name_plural = "_04. Family Sites"
         ordering = ["order"]
 
 
 class Copyright(models.Model):
-    text = models.TextField()
+    text = models.CharField(max_length=200)
+
+    def save(self, *args, **kwargs):
+        self.pk = 1
+        super().save(*args, **kwargs)
+
+    @classmethod
+    def load(cls):
+        obj, created = cls.objects.get_or_create(pk=1)
+        return obj
 
     def __str__(self):
         return "Copyright"
 
     class Meta:
-        verbose_name = "_07. Copyright"
-        verbose_name_plural = "_07. Copyright"
+        verbose_name = "_05. Copyright"
+        verbose_name_plural = "_05. Copyright"

@@ -7,24 +7,23 @@ from homepage.models.global_models import (
     NavigationGroup,
     FooterSection,
     FamilySite,
-    Copyright
+    Copyright,
 )
 from homepage.serializers.global_serializers import (
     SiteTitleSerializer,
     NavigationGroupSerializer,
     FooterSectionSerializer,
     FamilySiteSerializer,
-    CopyrightSerializer
+    CopyrightSerializer,
 )
 
+
 class SiteTitleDetailAPIView(generics.RetrieveAPIView):
-    queryset = SiteTitle.objects.all()
     serializer_class = SiteTitleSerializer
     permission_classes = [AllowAny]
 
     def get_object(self):
-        # 단일 레코드만 있다고 가정
-        return self.get_queryset().first()
+        return SiteTitle.load()
 
 
 class NavigationGroupListAPIView(generics.ListAPIView):
@@ -46,9 +45,8 @@ class FamilySiteListAPIView(generics.ListAPIView):
 
 
 class CopyrightDetailAPIView(generics.RetrieveAPIView):
-    queryset = Copyright.objects.all()
     serializer_class = CopyrightSerializer
     permission_classes = [AllowAny]
 
     def get_object(self):
-        return self.get_queryset().first()
+        return Copyright.load()
