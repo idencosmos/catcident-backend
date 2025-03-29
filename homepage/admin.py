@@ -70,7 +70,7 @@ def revalidate_all_tags(modeladmin, request, queryset):
         "bookcategories",
         "characters",
         "history",
-        "license",
+        "licenses",
         "gallerycategories",
         "galleryitems",
     ]

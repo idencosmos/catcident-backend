@@ -185,7 +185,7 @@ def handle_history_event_change(sender, instance, **kwargs):
 @receiver(post_delete, sender=LicensePage)
 def handle_license_page_change(sender, instance, **kwargs):
     revalidate_nextjs_tag("about")
-    revalidate_nextjs_tag("license")
+    revalidate_nextjs_tag("licenses")
 
 
 # Home models signals

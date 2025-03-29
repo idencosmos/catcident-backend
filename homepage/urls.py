@@ -46,7 +46,7 @@ urlpatterns = [
     path('about/characters/', CharacterListAPIView.as_view(), name='character-list'),
     path('about/characters/<slug:slug>/', CharacterDetailAPIView.as_view(), name='character-detail'),
     path('about/history/', HistoryEventListAPIView.as_view(), name='historyevent-list'),
-    path('about/license/', LicensePageDetailAPIView.as_view(), name='licensepage-detail'),
+    path('about/licenses/', LicensePageDetailAPIView.as_view(), name='licensepage-detail'),
 
     # Resources
     path('resources/categories/', ResourceCategoryListAPIView.as_view(), name='resource-category-list'),

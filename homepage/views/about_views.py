@@ -83,4 +83,4 @@ class LicensePageDetailAPIView(generics.RetrieveAPIView):
     permission_classes = [AllowAny]
 
     def get_object(self):
-        return LicensePage
+        return LicensePage.load()
