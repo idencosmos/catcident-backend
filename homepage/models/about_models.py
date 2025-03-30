@@ -71,6 +71,7 @@ class Book(TranslatableModel):
     translations = TranslatedFields(
         title=models.CharField(max_length=200),
         subtitle=models.CharField(max_length=200, blank=True, null=True),
+        summary=models.CharField(max_length=300, blank=True, null=True),
         description=CKEditor5Field(
             "Description", config_name="default", blank=True, null=True
         ),
@@ -107,6 +108,7 @@ class Character(TranslatableModel):
 
     translations = TranslatedFields(
         name=models.CharField(max_length=100),
+        bio_summary=models.CharField(max_length=300, blank=True, null=True),
         description=CKEditor5Field(
             "Description", config_name="default", blank=True, null=True
         ),

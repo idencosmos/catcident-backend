@@ -52,7 +52,7 @@ class FooterSubMenuSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = FooterSubMenu
-        fields = ["id", "href", "label"]
+        fields = ["id", "href", "label", "open_in_new_tab"]
 
     def get_label(self, obj):
         return obj.safe_translation_getter("label", any_language=True)

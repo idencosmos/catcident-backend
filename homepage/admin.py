@@ -166,7 +166,7 @@ class NavigationSubMenuInline(TranslatableTabularInline):
 class FooterSubMenuInline(TranslatableTabularInline):
     model = FooterSubMenu
     extra = 0
-    fields = ("label", "href", "order")
+    fields = ("label", "href", "open_in_new_tab", "order")
 
 
 @admin.register(NavigationGroup)
@@ -329,6 +329,7 @@ class BookAdmin(TranslatableFieldWidgetMixin, TranslatableAdmin):
     field_widget_templates = {
         "title": "short_text",
         "subtitle": "short_text",
+        "summary": "medium_text",
     }
 
     list_display = ("id", "title_display", "subtitle_display", "category", "pub_date")
@@ -336,6 +337,7 @@ class BookAdmin(TranslatableFieldWidgetMixin, TranslatableAdmin):
     search_fields = (
         "translations__title",
         "translations__subtitle",
+        "translations__summary",
         "translations__description",
     )
     filter_horizontal = ("authors",)
@@ -346,7 +348,7 @@ class BookAdmin(TranslatableFieldWidgetMixin, TranslatableAdmin):
         (
             "번역 가능 내용",
             {
-                "fields": ("title", "subtitle", "description"),
+                "fields": ("title", "subtitle", "summary", "description"),
                 "description": "여러 언어로 번역 가능한 컨텐츠입니다.",
             },
         ),
@@ -362,16 +364,26 @@ class BookAdmin(TranslatableFieldWidgetMixin, TranslatableAdmin):
 
 
 @admin.register(Character)
-class CharacterAdmin(TranslatableAdmin):
+class CharacterAdmin(TranslatableFieldWidgetMixin, TranslatableAdmin):
+    field_widget_templates = {
+        "name": "short_text",
+        "bio_summary": "medium_text",
+    }
+
     list_display = ("id", "name_display", "slug")
-    search_fields = ("translations__name", "translations__description", "slug")
+    search_fields = (
+        "translations__name",
+        "translations__bio_summary",
+        "translations__description",
+        "slug",
+    )
     actions = [revalidate_all_tags]
     fieldsets = (
         (None, {"fields": ("slug", "image", "books", "creator")}),
         (
             "번역 가능 내용",
             {
-                "fields": ("name", "description"),
+                "fields": ("name", "bio_summary", "description"),
                 "description": "여러 언어로 번역 가능한 컨텐츠입니다.",
             },
         ),

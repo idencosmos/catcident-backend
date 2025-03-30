@@ -83,6 +83,7 @@ class FooterSubMenu(TranslatableModel):
         FooterSection, related_name="sub_menus", on_delete=models.CASCADE
     )
     href = models.CharField(max_length=200)
+    open_in_new_tab = models.BooleanField(default=False, verbose_name="새 창에서 열기")
     order = models.PositiveIntegerField(default=0)
 
     translations = TranslatedFields(label=models.CharField(max_length=100))
