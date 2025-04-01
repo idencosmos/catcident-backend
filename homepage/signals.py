@@ -1,4 +1,9 @@
-# homepage/signals.py
+"""
+/homepage/signals.py
+모델 변경 이벤트를 감지하여 Next.js 캐시 태그 재검증 시그널 정의
+Django 모델 변경 시 프론트엔드 캐시를 자동 갱신하기 위한 시그널 핸들러 구현
+"""
+
 import logging
 import requests
 from django.db.models.signals import post_save, post_delete
@@ -30,13 +35,48 @@ from .models.gallery_models import GalleryCategory, GalleryItem
 logger = logging.getLogger(__name__)
 
 
+# 태그 카테고리 정의
+GLOBAL_TAGS = [
+    "global",
+    "sitetitle",
+    "navigation",
+    "footer",
+    "familysite",
+    "copyright",
+]
+
+SECTION_TAGS = ["home", "about", "news", "events", "gallery"]
+
+CONTENT_TAGS = [
+    "homesections",
+    "heroslides",
+    "newscategories",
+    "eventcategories",
+    "creators",
+    "books",
+    "bookcategories",
+    "characters",
+    "history",
+    "licenses",
+    "gallerycategories",
+    "galleryitems",
+]
+
+# 모든 태그 목록 (재검증시 사용)
+ALL_TAGS = GLOBAL_TAGS + SECTION_TAGS + CONTENT_TAGS
+
+
 def revalidate_nextjs_tag(tag):
+    """
+    Next.js 개별 태그 재검증 요청 함수
+    태그명을 받아 Next.js API 엔드포인트로 재검증 요청을 전송합니다.
+    """
     nextjs_revalidate_url = getattr(settings, "NEXTJS_REVALIDATE_URL", None)
     nextjs_revalidate_token = getattr(settings, "NEXTJS_REVALIDATE_TOKEN", None)
 
     if not nextjs_revalidate_url or not nextjs_revalidate_token:
         logger.warning(
-            "NEXTJS_REVALIDATE_URL or NEXTJS_REVALIDATE_TOKEN not configured"
+            "NEXTJS_REVALIDATE_URL 또는 NEXTJS_REVALIDATE_TOKEN 설정이 없습니다"
         )
         return
 
@@ -47,13 +87,26 @@ def revalidate_nextjs_tag(tag):
             headers={"Authorization": f"Bearer {nextjs_revalidate_token}"},
         )
         if response.status_code == 200:
-            logger.info(f"Successfully revalidated tag: {tag}")
+            logger.info(f"태그 재검증 성공: {tag}")
         else:
             logger.error(
-                f"Failed to revalidate tag: {tag}. Status: {response.status_code}, Response: {response.text}"
+                f"태그 재검증 실패: {tag}, 상태 코드: {response.status_code}, 응답: {response.text}"
             )
     except Exception as e:
-        logger.error(f"Error calling Next.js revalidation API: {e}")
+        logger.error(f"Next.js 재검증 API 호출 오류: {e}")
+
+
+def revalidate_all_nextjs_tags():
+    """
+    모든 Next.js 태그를 재검증하는 함수
+    모든 정의된 태그에 대해 재검증 요청을 보내고 총 개수를 반환합니다.
+    """
+    tag_count = 0
+    for tag in ALL_TAGS:
+        revalidate_nextjs_tag(tag)
+        tag_count += 1
+
+    return tag_count
 
 
 # Global models signals

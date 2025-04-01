@@ -8,7 +8,7 @@ from django.db import models
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.contrib import admin, messages
-from .signals import revalidate_nextjs_tag
+from .signals import revalidate_nextjs_tag, revalidate_all_nextjs_tags
 from parler.admin import TranslatableAdmin, TranslatableTabularInline
 from .models import (
     # Global 모델
@@ -48,40 +48,9 @@ from .models import (
 
 def revalidate_all_tags(modeladmin, request, queryset):
     """모든 Next.js 태그를 재검증합니다"""
-    # 글로벌 태그
-    global_tags = [
-        "global",
-        "sitetitle",
-        "navigation",
-        "footer",
-        "familysite",
-        "copyright",
-    ]
-    # 섹션별 태그
-    section_tags = ["home", "about", "news", "events", "gallery"]
-    # 컨텐츠 태그
-    content_tags = [
-        "homesections",
-        "heroslides",
-        "newscategories",
-        "eventcategories",
-        "creators",
-        "books",
-        "bookcategories",
-        "characters",
-        "history",
-        "licenses",
-        "gallerycategories",
-        "galleryitems",
-    ]
-
-    # 모든 태그 재검증
-    total_tags = global_tags + section_tags + content_tags
-    for tag in total_tags:
-        revalidate_nextjs_tag(tag)
-
+    tag_count = revalidate_all_nextjs_tags()
     messages.success(
-        request, f"총 {len(total_tags)}개의 Next.js 태그가 성공적으로 재검증되었습니다."
+        request, f"총 {tag_count}개의 Next.js 태그가 성공적으로 재검증되었습니다."
     )
 
 
