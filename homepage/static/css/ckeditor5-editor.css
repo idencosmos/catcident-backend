@@ -1,0 +1,108 @@
+/**
+ * homepage/static/css/ckeditor5-editor.css
+ * Django Admin에서 CKEditor 5 UI 요소의 다크모드 스타일 정의
+ */
+
+/* 다크모드 기본 변수 설정 */
+html[data-theme="dark"] .ck.ck-editor,
+html[data-theme="dark"] .ck.ck-panel,
+html[data-theme="dark"] .ck.ck-toolbar,
+html[data-theme="dark"] .ck-reset_all {
+  /* 배경 색상 */
+  --ck-color-base-background: #3c3c3c;
+  --ck-color-toolbar-background: #333;
+  --ck-color-dropdown-panel-background: var(--ck-color-base-background);
+
+  /* 텍스트 색상 */
+  --ck-color-base-text: #f0f0f0;
+  --ck-color-text: #f0f0f0;
+  --ck-color-button-on-color: #f0f0f0;
+
+  /* 테두리 색상 */
+  --ck-color-base-border: #555;
+  --ck-color-toolbar-border: #555;
+  --ck-color-panel-border: #555;
+  --ck-color-dropdown-panel-border: var(--ck-color-panel-border);
+
+  /* 버튼 상태 색상 */
+  --ck-color-button-default-hover-background: #4a4a4a;
+  --ck-color-button-default-active-background: #555;
+  --ck-color-button-on-background: #5a67d8;
+  --ck-color-button-on-hover-background: #4c51bf;
+
+  /* 리스트 색상 */
+  --ck-color-list-background: var(--ck-color-base-background);
+  --ck-color-list-button-hover-background: #4a4a4a;
+
+  /* 포커스 효과 */
+  --ck-color-focus-border-coordinates: 210, 70%, 65%;
+  --ck-color-focus-border: hsl(var(--ck-color-focus-border-coordinates));
+  --ck-color-focus-outer-shadow: hsla(
+    var(--ck-color-focus-border-coordinates),
+    0.3
+  );
+
+  /* 툴팁 색상 */
+  --ck-color-tooltip-background: #f0f0f0;
+  --ck-color-tooltip-text: #333;
+
+  /* 그림자 색상 */
+  --ck-color-shadow-drop: rgba(0, 0, 0, 0.3);
+  --ck-color-shadow-drop-active: rgba(0, 0, 0, 0.4);
+  --ck-color-shadow-inner: rgba(0, 0, 0, 0.3);
+}
+
+/* 에디터 프레임 테두리 색상 (포커스 없을 때) */
+html[data-theme="dark"]
+  .ck.ck-editor__main
+  > .ck-editor__editable:not(.ck-focused) {
+  border-color: var(--ck-color-base-border);
+}
+
+/* 아이콘 색상 처리 */
+html[data-theme="dark"] .ck.ck-icon,
+html[data-theme="dark"] .ck.ck-icon * {
+  color: inherit !important;
+  fill: currentColor !important;
+}
+
+html[data-theme="dark"] .ck.ck-icon:not([fill]) {
+  fill: currentColor !important;
+}
+
+/* 스플릿 버튼 동작 개선 */
+html[data-theme="dark"]
+  .ck.ck-splitbutton:hover
+  > .ck-splitbutton__action:not(:hover):not(.ck-on):not(.ck-disabled),
+html[data-theme="dark"]
+  .ck.ck-splitbutton.ck-splitbutton_open
+  > .ck-splitbutton__action:not(:hover):not(.ck-on):not(.ck-disabled) {
+  background: transparent;
+}
+
+html[data-theme="dark"]
+  .ck.ck-splitbutton
+  > .ck-splitbutton__action:hover:not(.ck-on):not(.ck-disabled) {
+  background: var(--ck-color-button-default-hover-background);
+}
+
+html[data-theme="dark"]
+  .ck.ck-splitbutton
+  > .ck-splitbutton__arrow:hover:not(.ck-on):not(.ck-disabled) {
+  background: var(--ck-color-button-default-hover-background);
+}
+
+html[data-theme="dark"]
+  .ck.ck-splitbutton
+  > .ck-splitbutton__action:hover:not(.ck-on):not(.ck-disabled)
+  ~ .ck-splitbutton__arrow:not(:hover):not(.ck-on):not(.ck-disabled) {
+  background: var(--ck-color-button-default-hover-background);
+}
+
+html[data-theme="dark"]
+  .ck.ck-splitbutton:hover
+  > .ck-splitbutton__arrow:not(:hover):not(.ck-on):not(.ck-disabled) {
+  background: var(--ck-color-button-default-hover-background);
+}
+
+/* 라이트 모드는 CKEditor의 기본 스타일 사용 (별도 설정 불필요) */

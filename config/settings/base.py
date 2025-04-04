@@ -1,7 +1,6 @@
-# config/settings/base.py
 """
-기본 Django 설정 파일
-개발 및 프로덕션 환경에서 공통으로 사용되는 설정들이 포함됩니다.
+config/settings/base.py
+Django 기본 설정 파일 - 개발 및 프로덕션 환경의 공통 설정
 """
 
 import environ
@@ -41,9 +40,7 @@ CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=[])
 # =================================================
 # Next.js 재검증 설정
 # =================================================
-# Next.js 재검증 API URL
 NEXTJS_REVALIDATE_URL = env("NEXTJS_REVALIDATE_URL", default=None)
-# Next.js 재검증 API 토큰 (보안을 위해)
 NEXTJS_REVALIDATE_TOKEN = env("NEXTJS_REVALIDATE_TOKEN", default=None)
 
 # =================================================
@@ -256,16 +253,16 @@ REST_FRAMEWORK = {
 # =================================================
 # Celery 및 캐싱 설정
 # =================================================
-# Celery
+# Celery 기본 설정
 CELERY_BROKER_URL = env("CELERY_BROKER_URL")
 CELERY_RESULT_BACKEND = env("CELERY_RESULT_BACKEND")
 CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
 CELERY_RESULT_SERIALIZER = "json"
 CELERY_TIMEZONE = "Asia/Seoul"
-CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True  # 이 줄 추가
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 
-# 주기적 작업
+# Celery 주기적 작업 설정
 CELERY_BEAT_SCHEDULE = {
     "clean-unused-media-every-day": {
         "task": "uploads.tasks.clean_unused_media_task",
@@ -277,7 +274,7 @@ CELERY_BEAT_SCHEDULE = {
     },
 }
 
-# Redis 캐시
+# Redis 캐시 설정
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
@@ -301,14 +298,14 @@ customColorPalette = [
     {"color": "hsl(207, 90%, 54%)", "label": "Blue"},
 ]
 
-# 기본 설정
+# CKEditor 기본 설정
 CKEDITOR_5_CUSTOM_CSS = "css/ckeditor_custom.css"
 CKEDITOR_5_FILE_UPLOAD_PERMISSION = "staff"
 CKEDITOR_5_ALLOW_ALL_FILE_TYPES = True
 CKEDITOR_5_UPLOAD_FILE_TYPES = ["jpeg", "jpg", "gif", "png", "pdf", "mp4", "mov"]
 CKEDITOR_5_MAX_FILE_SIZE = 1024  # MB
 
-# 에디터 구성
+# CKEditor 도구 구성
 CKEDITOR_5_CONFIGS = {
     "default": {
         "blockToolbar": [
@@ -324,6 +321,9 @@ CKEDITOR_5_CONFIGS = {
         ],
         "toolbar": {
             "items": [
+                "undo",
+                "redo",
+                "|",
                 "heading",
                 "|",
                 "outdent",
@@ -356,7 +356,9 @@ CKEDITOR_5_CONFIGS = {
                 "insertImage",
                 "fileUpload",
                 "insertTable",
+                "horizontalLine",
                 "|",
+                "specialCharacters",
                 "sourceEditing",
             ],
             "shouldNotGroupWhenFull": True,
@@ -370,13 +372,8 @@ CKEDITOR_5_CONFIGS = {
                 "imageStyle:alignCenter",
                 "imageStyle:side",
                 "|",
-            ],
-            "styles": [
-                "full",
-                "side",
-                "alignLeft",
-                "alignRight",
-                "alignCenter",
+                "imageResize",
+                "linkImage",
             ],
         },
         "table": {
@@ -420,6 +417,18 @@ CKEDITOR_5_CONFIGS = {
                     "view": "h4",
                     "title": "Heading 3",
                     "class": "ck-heading_heading3",
+                },
+                {
+                    "model": "heading4",
+                    "view": "h5",
+                    "title": "Heading 4",
+                    "class": "ck-heading_heading4",
+                },
+                {
+                    "model": "heading5",
+                    "view": "h6",
+                    "title": "Heading 5",
+                    "class": "ck-heading_heading5",
                 },
             ]
         },
@@ -469,7 +478,7 @@ LOGGING = {
     },
 }
 
-# 로깅 레벨 설정
+# 로깅 레벨 환경변수에서 설정
 LOGGING_LEVEL = env("LOGGING_LEVEL", default="INFO")
 LOGGING["handlers"]["file"]["level"] = LOGGING_LEVEL
 LOGGING["loggers"]["uploads"]["level"] = LOGGING_LEVEL

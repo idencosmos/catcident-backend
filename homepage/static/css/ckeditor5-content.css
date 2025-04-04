@@ -1,0 +1,431 @@
+/**
+ * homepage/static/css/ckeditor5-content.css
+ * CKEditor 5 콘텐츠 영역 스타일 - Tailwind Prose 기반 라이트/다크모드 지원
+ */
+
+/* 기본 CSS 변수 설정 */
+.ck-content {
+  /* 라이트 모드 색상 변수 */
+  --ck-prose-body: #374151; /* gray-700 */
+  --ck-prose-headings: #111827; /* gray-900 */
+  --ck-prose-lead: #4b5563; /* gray-600 */
+  --ck-prose-links: #2563eb; /* blue-600 */
+  --ck-prose-bold: #111827; /* gray-900 */
+  --ck-prose-counters: #6b7280; /* gray-500 */
+  --ck-prose-bullets: #d1d5db; /* gray-300 */
+  --ck-prose-hr: #e5e7eb; /* gray-200 */
+  --ck-prose-quotes: #111827; /* gray-900 */
+  --ck-prose-quote-borders: #e5e7eb; /* gray-200 */
+  --ck-prose-captions: #6b7280; /* gray-500 */
+  --ck-prose-code: #111827; /* gray-900 */
+  --ck-prose-pre-code: #e5e7eb; /* gray-200 */
+  --ck-prose-pre-bg: #1f2937; /* gray-800 */
+  --ck-prose-th-borders: #d1d5db; /* gray-300 */
+  --ck-prose-td-borders: #e5e7eb; /* gray-200 */
+  
+  /* 다크 모드 색상 변수 */
+  --ck-prose-invert-body: #d1d5db; /* gray-300 */
+  --ck-prose-invert-headings: #ffffff; /* white */
+  --ck-prose-invert-lead: #9ca3af; /* gray-400 */
+  --ck-prose-invert-links: #93c5fd; /* blue-300 */
+  --ck-prose-invert-bold: #ffffff; /* white */
+  --ck-prose-invert-counters: #9ca3af; /* gray-400 */
+  --ck-prose-invert-bullets: #4b5563; /* gray-600 */
+  --ck-prose-invert-hr: #374151; /* gray-700 */
+  --ck-prose-invert-quotes: #f3f4f6; /* gray-100 */
+  --ck-prose-invert-quote-borders: #374151; /* gray-700 */
+  --ck-prose-invert-captions: #9ca3af; /* gray-400 */
+  --ck-prose-invert-code: #ffffff; /* white */
+  --ck-prose-invert-pre-code: #d1d5db; /* gray-300 */
+  --ck-prose-invert-pre-bg: rgba(0, 0, 0, 0.5); /* 50% 불투명 검은색 */
+  --ck-prose-invert-th-borders: #4b5563; /* gray-600 */
+  --ck-prose-invert-td-borders: #374151; /* gray-700 */
+
+  /* 기본 스타일 */
+  background: #ffffff;
+  color: var(--ck-prose-body);
+  font-size: 1rem; /* 16px */
+  line-height: 1.75; /* 28/16 */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+
+/* 문단 스타일 */
+.ck-content p {
+  margin-top: 1.25em; /* 20/16 */
+  margin-bottom: 1.25em; /* 20/16 */
+}
+
+/* 리드(주요) 텍스트 */
+.ck-content [class~="lead"] {
+  color: var(--ck-prose-lead);
+  font-size: 1.25em; /* 20/16 */
+  line-height: 1.6; /* 32/20 */
+  margin-top: 1.2em; /* 24/20 */
+  margin-bottom: 1.2em; /* 24/20 */
+}
+
+/* 제목 스타일 */
+.ck-content h1 {
+  color: var(--ck-prose-headings);
+  font-weight: 800;
+  font-size: 2.25em; /* 36/16 */
+  margin-top: 0;
+  margin-bottom: 0.8888889em; /* 32/36 */
+  line-height: 1.1111111; /* 40/36 */
+}
+
+.ck-content h2 {
+  color: var(--ck-prose-headings);
+  font-weight: 700;
+  font-size: 1.5em; /* 24/16 */
+  margin-top: 2em; /* 48/24 */
+  margin-bottom: 1em; /* 24/24 */
+  line-height: 1.3333333; /* 32/24 */
+  padding-bottom: 0.5em;
+  border-bottom: 1px solid var(--ck-prose-hr);
+}
+
+.ck-content h3 {
+  color: var(--ck-prose-headings);
+  font-weight: 600;
+  font-size: 1.25em; /* 20/16 */
+  margin-top: 1.6em; /* 32/20 */
+  margin-bottom: 0.6em; /* 12/20 */
+  line-height: 1.6; /* 32/20 */
+}
+
+.ck-content h4 {
+  color: var(--ck-prose-headings);
+  font-weight: 600;
+  margin-top: 1.5em; /* 24/16 */
+  margin-bottom: 0.5em; /* 8/16 */
+  line-height: 1.5; /* 24/16 */
+}
+
+/* 강조 요소 */
+.ck-content strong {
+  color: var(--ck-prose-bold);
+  font-weight: 600;
+}
+
+/* 링크 스타일 */
+.ck-content a {
+  color: var(--ck-prose-links);
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+/* 인용구 스타일 */
+.ck-content blockquote {
+  font-weight: 500;
+  font-style: italic;
+  color: var(--ck-prose-quotes);
+  border-left-width: 0.25rem;
+  border-left-color: var(--ck-prose-quote-borders);
+  quotes: "\\201C""\\201D""\\2018""\\2019";
+  margin-top: 1.6em; /* 32/20 */
+  margin-bottom: 1.6em; /* 32/20 */
+  padding-left: 1em; /* 20/20 */
+}
+
+.ck-content blockquote p:first-of-type::before {
+  content: open-quote;
+}
+
+.ck-content blockquote p:last-of-type::after {
+  content: close-quote;
+}
+
+/* 목록 스타일 */
+.ck-content ul {
+  list-style-type: disc;
+  margin-top: 1.25em; /* 20/16 */
+  margin-bottom: 1.25em; /* 20/16 */
+  padding-left: 1.625em; /* 26/16 */
+}
+
+.ck-content ol {
+  list-style-type: decimal;
+  margin-top: 1.25em; /* 20/16 */
+  margin-bottom: 1.25em; /* 20/16 */
+  padding-left: 1.625em; /* 26/16 */
+}
+
+.ck-content li {
+  margin-top: 0.5em; /* 8/16 */
+  margin-bottom: 0.5em; /* 8/16 */
+}
+
+.ck-content ol > li {
+  padding-left: 0.375em; /* 6/16 */
+}
+
+.ck-content ul > li {
+  padding-left: 0.375em; /* 6/16 */
+}
+
+/* 중첩 목록 스타일 */
+.ck-content ul ul, .ck-content ul ol, .ck-content ol ul, .ck-content ol ol {
+  margin-top: 0.75em; /* 12/16 */
+  margin-bottom: 0.75em; /* 12/16 */
+}
+
+/* 목록 내 단락 스타일 */
+.ck-content > ul > li p {
+  margin-top: 0.75em; /* 12/16 */
+  margin-bottom: 0.75em; /* 12/16 */
+}
+
+.ck-content > ul > li > p:first-child {
+  margin-top: 1.25em; /* 20/16 */
+}
+
+.ck-content > ul > li > p:last-child {
+  margin-bottom: 1.25em; /* 20/16 */
+}
+
+.ck-content > ol > li > p:first-child {
+  margin-top: 1.25em; /* 20/16 */
+}
+
+.ck-content > ol > li > p:last-child {
+  margin-bottom: 1.25em; /* 20/16 */
+}
+
+/* 수평선 */
+.ck-content hr {
+  border-color: var(--ck-prose-hr);
+  border-top-width: 1px;
+  margin-top: 3em; /* 48/16 */
+  margin-bottom: 3em; /* 48/16 */
+}
+
+/* 테이블 스타일 */
+.ck-content table {
+  width: 100%;
+  table-layout: auto;
+  text-align: left;
+  margin-top: 2em; /* 32/16 */
+  margin-bottom: 2em; /* 32/16 */
+  font-size: 0.875em; /* 14/16 */
+  line-height: 1.7142857; /* 24/14 */
+}
+
+.ck-content thead {
+  border-bottom-width: 1px;
+  border-bottom-color: var(--ck-prose-th-borders);
+}
+
+.ck-content thead th {
+  color: var(--ck-prose-headings);
+  font-weight: 600;
+  vertical-align: bottom;
+  padding-right: 0.5714286em; /* 8/14 */
+  padding-bottom: 0.5714286em; /* 8/14 */
+  padding-left: 0.5714286em; /* 8/14 */
+}
+
+.ck-content tbody tr {
+  border-bottom-width: 1px;
+  border-bottom-color: var(--ck-prose-td-borders);
+}
+
+.ck-content tbody tr:last-child {
+  border-bottom-width: 0;
+}
+
+.ck-content tbody td, .ck-content tfoot td {
+  vertical-align: baseline;
+  padding-top: 0.5714286em; /* 8/14 */
+  padding-right: 0.5714286em; /* 8/14 */
+  padding-bottom: 0.5714286em; /* 8/14 */
+  padding-left: 0.5714286em; /* 8/14 */
+}
+
+/* 이미지 및 피규어 스타일 */
+.ck-content img, .ck-content picture {
+  margin-top: 2em; /* 32/16 */
+  margin-bottom: 2em; /* 32/16 */
+}
+
+.ck-content figure {
+  margin-top: 2em; /* 32/16 */
+  margin-bottom: 2em; /* 32/16 */
+}
+
+.ck-content figure > * {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.ck-content figcaption {
+  color: var(--ck-prose-captions);
+  font-size: 0.875em; /* 14/16 */
+  line-height: 1.4285714; /* 20/14 */
+  margin-top: 0.8571429em; /* 12/14 */
+}
+
+/* 코드 스타일 */
+.ck-content code {
+  color: var(--ck-prose-code);
+  font-weight: 600;
+  font-size: 0.875em; /* 14/16 */
+}
+
+.ck-content code::before, .ck-content code::after {
+  content: "`";
+}
+
+.ck-content pre {
+  color: var(--ck-prose-pre-code);
+  background-color: var(--ck-prose-pre-bg);
+  overflow-x: auto;
+  font-weight: 400;
+  font-size: 0.875em; /* 14/16 */
+  line-height: 1.7142857; /* 24/14 */
+  margin-top: 1.7142857em; /* 24/14 */
+  margin-bottom: 1.7142857em; /* 24/14 */
+  border-radius: 0.375rem; /* 6/16 */
+  padding-top: 0.8571429em; /* 12/14 */
+  padding-right: 1.1428571em; /* 16/14 */
+  padding-bottom: 0.8571429em; /* 12/14 */
+  padding-left: 1.1428571em; /* 16/14 */
+}
+
+.ck-content pre code {
+  background-color: transparent;
+  border-width: 0;
+  border-radius: 0;
+  padding: 0;
+  font-weight: inherit;
+  color: inherit;
+  font-size: inherit;
+  font-family: inherit;
+  line-height: inherit;
+}
+
+.ck-content pre code::before, .ck-content pre code::after {
+  content: "";
+}
+
+/* 첨자 및 위첨자 */
+.ck-content sub {
+  vertical-align: sub;
+  font-size: smaller;
+}
+
+.ck-content sup {
+  vertical-align: super;
+  font-size: smaller;
+}
+
+/* 체크박스 리스트 스타일 */
+.ck-content .todo-list {
+  list-style-type: none;
+  padding-left: 1.5em;
+}
+
+.ck-content .todo-list li {
+  position: relative;
+  margin-bottom: 0.5em;
+}
+
+.ck-content .todo-list .todo-list__label {
+  display: inline-block;
+}
+
+.ck-content .todo-list .todo-list__label > input {
+  position: absolute;
+  left: -1.5em;
+  top: 0.2em;
+  margin: 0;
+}
+
+/* 하이라이트 */
+.ck-content mark {
+  background-color: #fef3c7; /* amber-100 */
+  padding: 0.2em;
+}
+
+/* 미디어 삽입 관련 스타일 */
+.ck-content .media {
+  margin: 2em 0;
+  max-width: 100%;
+}
+
+/* 이미지 정렬 스타일 */
+.ck-content .image.image-style-align-left {
+  float: left;
+  margin-right: 1em;
+}
+
+.ck-content .image.image-style-align-right {
+  float: right;
+  margin-left: 1em;
+}
+
+.ck-content .image.image-style-align-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* 형제 요소 간 여백 제거 */
+.ck-content hr + * {
+  margin-top: 0;
+}
+
+.ck-content h2 + * {
+  margin-top: 0;
+}
+
+.ck-content h3 + * {
+  margin-top: 0;
+}
+
+.ck-content h4 + * {
+  margin-top: 0;
+}
+
+/* 처음과 마지막 요소의 여백 제거 */
+.ck-content > :first-child {
+  margin-top: 0;
+}
+
+.ck-content > :last-child {
+  margin-bottom: 0;
+}
+
+/* 다크 모드 스타일 */
+html[data-theme="dark"] .ck-content {
+  background: #1f2937; /* gray-800 */
+  
+  /* 다크 모드에서는 라이트 모드 변수를 다크 모드 변수로 덮어쓴다 */
+  --ck-prose-body: var(--ck-prose-invert-body);
+  --ck-prose-headings: var(--ck-prose-invert-headings);
+  --ck-prose-lead: var(--ck-prose-invert-lead);
+  --ck-prose-links: var(--ck-prose-invert-links);
+  --ck-prose-bold: var(--ck-prose-invert-bold);
+  --ck-prose-counters: var(--ck-prose-invert-counters);
+  --ck-prose-bullets: var(--ck-prose-invert-bullets);
+  --ck-prose-hr: var(--ck-prose-invert-hr);
+  --ck-prose-quotes: var(--ck-prose-invert-quotes);
+  --ck-prose-quote-borders: var(--ck-prose-invert-quote-borders);
+  --ck-prose-captions: var(--ck-prose-invert-captions);
+  --ck-prose-code: var(--ck-prose-invert-code);
+  --ck-prose-pre-code: var(--ck-prose-invert-pre-code);
+  --ck-prose-pre-bg: var(--ck-prose-invert-pre-bg);
+  --ck-prose-th-borders: var(--ck-prose-invert-th-borders);
+  --ck-prose-td-borders: var(--ck-prose-invert-td-borders);
+}
+
+/* 다크 모드에서의 하이라이트 색상 */
+html[data-theme="dark"] .ck-content mark {
+  background-color: #78350f; /* amber-900 */
+  color: #fef3c7; /* amber-100 */
+}
+
+/* 다크 모드에서 미디어 콘텐츠 주변 테두리 */
+html[data-theme="dark"] .ck-content .media {
+  border: 1px solid var(--ck-prose-hr);
+  padding: 0.5em;
+}
